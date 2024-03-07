@@ -256,7 +256,7 @@ function SMODS.INIT.JellyTarots()
        },
        },
        m_unlucky = {
-            name = "Unucky Card",
+            name = "Unlucky Card",
                 text = {
                    "{X:mult,C:white} X#6# {} Mult",
                    "{C:green}#1# in #3#{} chance",
@@ -742,7 +742,7 @@ end
 
 function addEnhancementsToPools(enhanceTable)
     -- Add Jokers to center
-    for k, v in pairsByOrder(enhanceTable) do
+    for k, v in pairs(enhanceTable) do
         v.key = k
         v.order = table_length(G.P_CENTER_POOLS['Enhanced']) + v.order
         G.P_CENTERS[k] = v

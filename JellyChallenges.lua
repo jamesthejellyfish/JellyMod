@@ -2,7 +2,7 @@
 --- MOD_NAME: Challenges
 --- MOD_ID: JellyChallenges
 --- MOD_AUTHOR: [JamesTheJellyfish]
---- MOD_DESCRIPTION: Yellow
+--- MOD_DESCRIPTION: Adds 10 new challenges to the game that utilize the new tarots and jokers added.
 
 ----------------------------------------------
 ------------MOD CODE -------------------------

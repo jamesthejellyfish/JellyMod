@@ -1,8 +1,8 @@
 --- STEAMODDED HEADER
---- MOD_NAME: Expand In Hand Abilities
+--- MOD_NAME: Game Modifications
 --- MOD_ID: ExpandInHandAbilities
---- MOD_AUTHOR: [lusciousdev]
---- MOD_DESCRIPTION: Expand in hand abilities by overriding evaluate_play
+--- MOD_AUTHOR: [JamesTheJellyfish]
+--- MOD_DESCRIPTION: overrides various functions such as evaluate_play to add functionality
 ----------------------------------------------
 ------------MOD CODE -------------------------
 

@@ -1,5 +1,5 @@
 # JellyMod
-A mod for balatro that adds 17 new jokers, reverse tarot cards, and some new challenges.
+A mod for balatro that adds 17 new jokers (including 2 new legendary cards!), reverse tarot cards, and some new challenges.
 
 
 Mod for Balatro

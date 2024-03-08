@@ -308,9 +308,9 @@ function SMODS.INIT.JellyTarots()
         m_coal   =  {max = 500, order = 16, name = "Coal Card", set = "Enhanced", pos = {x=6,y=5}, effect = "Coal Card", label = "Coal Card", config = {extra = {sub_chips = 10, sub_mult = 2, current = 1, rounds = 4}}},
     }
 
-    SMODS.Sprite:new("Tarot", SMODS.findModByID("JellyJokers").path, "Tarots_JellyMod.png", 71, 95, "asset_atli")
+    SMODS.Sprite:new("Tarot", SMODS.findModByID("JellyTarots").path, "Tarots_JellyMod.png", 71, 95, "asset_atli")
       :register()
-    SMODS.Sprite:new("centers", SMODS.findModByID("JellyJokers").path, "Enhancers_JellyMod.png", 71, 95, "asset_atli")
+    SMODS.Sprite:new("centers", SMODS.findModByID("JellyTarots").path, "Enhancers_JellyMod.png", 71, 95, "asset_atli")
     :register()
     addTarotsToPools(tarots)
     addEnhancementsToPools(enhancements)

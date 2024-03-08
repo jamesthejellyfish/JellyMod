@@ -745,30 +745,6 @@ function Card.remove_from_deck(self, from_debuff)
   remove_from_deckref(self, from_debuff)
 end
 
-local openref = Card.open
-function Card.open(self)
-  if self.ability.set == "Booster" then
-      self.config.center.config.choose = self.config.center.config.choose or 1
-      self.config.center.config.choose = math.min(self.config.center.config.choose + G.GAME.extra_gacha_pulls,
-          self.ability.extra)
-  end
-  openref(self)
-end
-
--- Yield My Flesh
-local evaluate_playref = G.FUNCS.evaluate_play
-function G.FUNCS.evaluate_play(self, e)
-  evaluate_playref(self, e)
-
-  for i = 1, #G.jokers.cards do
-      local effects = eval_card(G.jokers.cards[i],
-          { card = G.consumeables, after = true, scored_chips = hand_chips * mult })
-      if effects.jokers then
-          card_eval_status_text(G.jokers.cards[i], 'jokers', nil, 0.3, nil, effects.jokers)
-      end
-  end
-end
-
 local get_id_ref = Card.get_id
 function Card.get_id(self)
     if next(find_joker("Double Vision")) then return 2 end

@@ -16,12 +16,18 @@ Credit to [LushMod](https://github.com/lusciousdev/LushMod) for some of the code
 
 # Features:
 - 17 new jokers, including 2 new Legendaries!
-![Jokers](https://github.com/jamesthejellyfish/JellyMod/blob/main/Screenshots/Jokers.png?raw=true)
-![Scouter Joker](https://github.com/jamesthejellyfish/JellyMod/blob/main/Screenshots/Scouter.png?raw=true)
-![Pierrot](https://github.com/jamesthejellyfish/JellyMod/blob/main/Screenshots/pierrot.png?raw=true)
+![Jokers](Screenshots/Jokers.png)
+![Scouter Joker](Screenshots/Scouter.png)
+![Pierrot](Screenshots/pierrot.png)
+
+
+
 - 22 new "Reverse" Tarot cards, which do thematically similar things to their reight-side-up counterparts, but with a fun twist
-![Reverse Tarots](https://github.com/jamesthejellyfish/JellyMod/blob/main/Screenshots/Tarots.png?raw=true)
-![new cards](https://github.com/jamesthejellyfish/JellyMod/blob/main/Screenshots/Custom%20Cards.png?raw=true)
-![Reverse Hermit](https://github.com/jamesthejellyfish/JellyMod/blob/main/Screenshots/reverse_hermit.png?raw=true)
+![Reverse Tarots](Screenshots/Tarots.png)
+![new cards](Screenshots/Custom%20Cards.png)
+![Reverse Hermit](Screenshots/reverse_hermit.png)
+
+
+
 - 10 new challenges to show off the fun synergies that the new jokers and tarots have.
-![Challenges](https://github.com/jamesthejellyfish/JellyMod/blob/main/Screenshots/Challenges.png?raw=true)
+![Challenges](Screenshots/Challenges.png)

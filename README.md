@@ -15,6 +15,7 @@ Credit to [LushMod](https://github.com/lusciousdev/LushMod) for some of the code
 
 # Features:
 - 17 new jokers, including 2 new Legendaries!
+- For more info on the Jokers, click [Here](Jokers.md)
 ![Jokers](Screenshots/Jokers.png)
 ![Scouter Joker](Screenshots/Scouter.png)
 ![Pierrot](Screenshots/pierrot.png)
@@ -22,6 +23,7 @@ Credit to [LushMod](https://github.com/lusciousdev/LushMod) for some of the code
 
 
 - 22 new "Reverse" Tarot cards, which do thematically similar things to their reight-side-up counterparts, but with a fun twist
+- For more info on the Tarot Cards, click [Here](Tarots.md)
 ![Reverse Tarots](Screenshots/Tarots.png)
 ![new cards](Screenshots/Custom%20Cards.png)
 ![Reverse Hermit](Screenshots/reverse_hermit.png)

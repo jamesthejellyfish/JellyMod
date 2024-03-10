@@ -460,7 +460,7 @@ function generate_card_ui(_c, full_UI_table, specific_vars, card_type, badges, h
                 }}
             }
            loc_vars = {last_tarot_planet, G.GAME.probabilities.normal, 2}
-           if not (not fool_c or fool_c.name == 'The Fool') then
+           if not (not fool_c or fool_c.name == 'The Reverse Fool') then
                 info_queue[#info_queue+1] = fool_c
            end
        elseif _c.name == "The Magician" then loc_vars = {_c.config.max_highlighted, localize{type = 'name_text', set = 'Enhanced', key = _c.config.mod_conv}}; info_queue[#info_queue+1] = G.P_CENTERS[_c.config.mod_conv]
@@ -1361,6 +1361,7 @@ end
 
 
 G.FUNCS.evaluate_play_scouter = function(e)
+    G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + G.consumeables.config.card_limit
     local text,disp_text,poker_hands,scoring_hand,non_loc_disp_text = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
 
     --Add all the pure bonus cards to the scoring hand
@@ -1452,9 +1453,11 @@ G.FUNCS.evaluate_play_scouter = function(e)
                     local effects = {eval_card(scoring_hand[i], {cardarea = G.play, full_hand = G.play.cards, scoring_hand = scoring_hand, poker_hand = text})}
                     for k=1, #G.jokers.cards do
                         --calculate the joker individual card effects
-                        local eval = G.jokers.cards[k]:calculate_joker({cardarea = G.play, full_hand = G.play.cards, scoring_hand = scoring_hand, scoring_name = text, poker_hands = poker_hands, other_card = scoring_hand[i], individual = true, blueprint = 1, scouter = true})
-                        if eval then 
-                            table.insert(effects, eval)
+                        if G.jokers.cards[k].ability.name ~= 'Vagabond' then
+                            local eval = G.jokers.cards[k]:calculate_joker({cardarea = G.play, full_hand = G.play.cards, scoring_hand = scoring_hand, scoring_name = text, poker_hands = poker_hands, other_card = scoring_hand[i], individual = true, blueprint = 1, scouter = true})
+                            if eval then 
+                                table.insert(effects, eval)
+                            end
                         end
                     end
                     scoring_hand[i].lucky_trigger = nil
@@ -1515,10 +1518,12 @@ G.FUNCS.evaluate_play_scouter = function(e)
 
                     for k=1, #G.jokers.cards do
                         --calculate the joker individual card effects
-                        local eval = G.jokers.cards[k]:calculate_joker({cardarea = G.hand, full_hand = G.play.cards, scoring_hand = scoring_hand, scoring_name = text, poker_hands = poker_hands, other_card = hand_scouter[i], individual = true, blueprint=1, scouter=true})
-                        if eval then 
-                            mod_percent = true
-                            table.insert(effects, eval)
+                        if G.jokers.cards[k].ability.name ~= 'Vagabond' then
+                            local eval = G.jokers.cards[k]:calculate_joker({cardarea = G.hand, full_hand = G.play.cards, scoring_hand = scoring_hand, scoring_name = text, poker_hands = poker_hands, other_card = hand_scouter[i], individual = true, blueprint=1, scouter=true})
+                            if eval then 
+                                mod_percent = true
+                                table.insert(effects, eval)
+                            end
                         end
                     end
 
@@ -1614,13 +1619,15 @@ G.FUNCS.evaluate_play_scouter = function(e)
 
             --Joker on Joker effects
             for _, v in ipairs(G.jokers.cards) do
-                local effect = v:calculate_joker{full_hand = G.play.cards, scoring_hand = scoring_hand, scoring_name = text, poker_hands = poker_hands, other_joker = _card}
-                if effect then
-                    local extras = {mult = false, hand_chips = false}
-                    if effect.mult_mod then mult = mod_mult(mult + effect.mult_mod);extras.mult = true end
-                    if effect.chip_mod then hand_chips = mod_chips(hand_chips + effect.chip_mod);extras.hand_chips = true end
-                    if effect.Xmult_mod then mult = mod_mult(mult*effect.Xmult_mod);extras.mult = true  end
-                    percent = percent+percent_delta
+                if v.ability.name ~= 'Vagabond' then
+                    local effect = v:calculate_joker{full_hand = G.play.cards, scoring_hand = scoring_hand, scoring_name = text, poker_hands = poker_hands, other_joker = _card}
+                    if effect then
+                        local extras = {mult = false, hand_chips = false}
+                        if effect.mult_mod then mult = mod_mult(mult + effect.mult_mod);extras.mult = true end
+                        if effect.chip_mod then hand_chips = mod_chips(hand_chips + effect.chip_mod);extras.hand_chips = true end
+                        if effect.Xmult_mod then mult = mod_mult(mult*effect.Xmult_mod);extras.mult = true  end
+                        percent = percent+percent_delta
+                    end
                 end
             end
 
@@ -1631,7 +1638,7 @@ G.FUNCS.evaluate_play_scouter = function(e)
                 percent = percent+percent_delta
             end
         end
-
+        G.GAME.consumeable_buffer = math.max(0, G.GAME.consumeable_buffer - G.consumeables.config.card_limit)
         local nu_chip, nu_mult = G.GAME.selected_back:trigger_effect{context = 'final_scoring_step', chips = hand_chips, mult = mult}
         mult = mod_mult(nu_mult or mult)
         hand_chips = mod_chips(nu_chip or hand_chips)

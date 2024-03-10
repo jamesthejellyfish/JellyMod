@@ -583,7 +583,8 @@ function Card.use_consumeable(self, area, copier)
         G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
             play_sound('timpani')
             local card = create_card('Joker', G.jokers, chosen_joker.config.center.rarity == 4, rarity, nil, nil, nil, 'rev_jud')
-            card:set_edition(chosen_joker.edition or {}, true)
+            sendDebugMessage(tostring(chosen_joker.edition))
+            if chosen_joker.edition ~= nil then card:set_edition(chosen_joker.edition, true) end
             chosen_joker:start_dissolve()
             card:add_to_deck()
             G.jokers:emplace(card)
@@ -823,6 +824,9 @@ function play_tarot_cards(n, i)
             G.GAME.consumeable_buffer = 0
           end
           G.E_MANAGER:add_event(Event({
+            trigger = 'immediate',
+            func = (function()
+          G.E_MANAGER:add_event(Event({
                 trigger = 'immediate',
                 func = (function() 
                   G.E_MANAGER:add_event(Event({
@@ -853,9 +857,9 @@ function play_tarot_cards(n, i)
                     return true end)}))
                   return true end)}))
           return true end)}))
+          return true end)}))
         end 
-        return true end)
-    }))
+        return true end)}))
 end
 
 

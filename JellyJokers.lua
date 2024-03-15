@@ -101,6 +101,7 @@ function SMODS.INIT.JellyJokers()
                       "sell this card to apply",
                       "{C:dark_edition}negative{} to a random Joker.",
                       "Permanent {C:blue}-#1#{} hands.",
+                      "{C:inactive}({C:attention}Destroys{C:inactive} itself when blind selected){}"
               },
           },
           j_lipographic_jokr = {
@@ -156,10 +157,19 @@ function SMODS.INIT.JellyJokers()
           }
   }
   
-  -- Misc localization
-  G.localization.misc.dictionary.k_no_you = "Reversed!"
-  G.localization.misc.dictionary.k_hatter = "CHANGE PLACES!"
-  G.localization.misc.dictionary.k_zeno = "Halfway!"
+    -- Misc localization
+    G.localization.misc.dictionary.k_no_you = "Reversed!"
+    G.localization.misc.dictionary.k_hatter = "CHANGE PLACES!"
+    G.localization.misc.dictionary.k_zeno = "Halfway!"
+
+
+
+    G.localization.misc['poker_hands']['Six of a Kind'] = 'Six of a Kind'
+    G.localization.misc['poker_hands']['Flush Six'] = 'Flush Six'
+    G.localization.misc['poker_hands']['Flusher House'] = 'Flusher House'
+    G.localization.misc['poker_hands']['Fuller House'] = 'Fuller House'
+    G.localization.misc['poker_hands']['Three Pair'] = 'Three Pair'
+
 
   
 
@@ -167,7 +177,7 @@ function SMODS.INIT.JellyJokers()
   updateLocalization(localization, "Joker")
 
   --[[SMODS.Joker:new(
-      name, slug,
+      name, slug, 
       config,
       spritePos, loc_txt,
       rarity, cost, unlocked, discovered, blueprint_compat, eternal_compat,
@@ -188,23 +198,25 @@ function SMODS.INIT.JellyJokers()
     j_scouter=          {order = 10,  unlocked = true,  discovered = true, blueprint_compat = false, eternal_compat = true, rarity = 1, cost = 4, name = "Scouter Joker", pos = {x=9,y=16}, set = "Joker", effect = "", cost_mult = 1.0, config = {extra = 0}},
     j_zeno=             {order = 11,  unlocked = true,  discovered = true, blueprint_compat = false, eternal_compat = true, rarity = 3, cost = 8, name = "Zeno's Joker", pos = {x = 0, y = 17}, set = 'Joker', config = {}},
     j_one_more=         {order = 12,  unlocked = true,  discovered = true, blueprint_compat = false, eternal_compat = true, rarity = 1, cost = 8, name = "One More Time!", pos = {x = 1, y = 17}, set = 'Joker', config = {extra = {score=0, old_chips=0}}},
-    j_collector=        {order = 13,  unlocked = true,  discovered = true, blueprint_compat = true, eternal_compat = true, rarity = 3, cost = 7, name = "The Collector", pos = {x=2,y=17}, set = "Joker", effect = "Card Buff", cost_mult = 1.0, config = {extra = 2}},
+    j_collector=        {order = 13,  unlocked = true,  discovered = true, blueprint_compat = true, eternal_compat = true, rarity = 3, cost = 7, name = "The Collector", pos = {x=2,y=17}, set = "Joker", effect = "Card Buff", cost_mult = 1.0, config = {extra = 1.5}},
     j_buckleswasher=    {order = 14,  unlocked = true,  discovered = true, blueprint_compat = true, eternal_compat = true, rarity = 2, cost = 4, name = "Buckleswasher", pos = {x=3,y=17}, set = "Joker", effect = "Set Mult", cost_mult = 1.0, config = {mult = 1},unlock_condition = {type = 'c_jokers_sold', extra = 20}},
     j_hatter=           {order = 15,  unlocked = true,  discovered = true, blueprint_compat = false, eternal_compat = true, rarity = 2, cost = 7, name = "Mad Hatter",set = "Joker", config = {},  pos = {x=4,y=17}},
     j_greener_pastures= {order = 16,  unlocked = true,  discovered = true, blueprint_compat = false, eternal_compat = true, rarity = 2, cost = 8, name = "Greener Pastures",set = "Joker", config = {extra = nil},  pos = {x=5,y=17}},
     j_special_snowflake={order = 17,  unlocked = true,  discovered = true, blueprint_compat = true, eternal_compat = true, rarity = 2, cost = 6, name = "Special Snowflake",set = "Joker", config = {extra = 0.2},  pos = {x=6,y=17}, soul_pos={x=7, y=17}},
   }
 
-  -- Blacklist individual Jokers here
-  addJokersToPools(jokers)
   -- Add sprites
-  SMODS.Sprite:new("Joker", SMODS.findModByID("JellyJokers").path, "Jokers_JellyMod.png", 71, 95, "asset_atli")
+  SMODS.Sprite:new("JellyJokers", SMODS.findModByID("JellyJokers").path, "Jokers_JellyMod.png", 71, 95, "asset_atli")
       :register()
-
+  addJokersToPools(jokers, "JellyJokers")
 end
 
 local calculate_jokerref = Card.calculate_joker
 function Card.calculate_joker(self, context)
+  if self.ability.name == "Hiker" and context.scouter then return end
+  if self.ability.name == "To Do List" and context.scouter then return end
+  if self.ability.name == "Matador" and context.scouter then return end
+  if self.ability.name == "Mr. Bones" and context.scouter then return end
   local calc_ref = calculate_jokerref(self, context)
 
   if self.ability.set == "Joker" and not self.debuff then
@@ -373,11 +385,13 @@ function Card.calculate_joker(self, context)
                 table.insert(temp_pool, v)
             end
         end
-        local eligible_card = pseudorandom_element(temp_pool, pseudoseed('Pessimist'))
-        local edition = {negative = true}
-        eligible_card:set_edition(edition, true)
-        G.GAME.round_resets.hands = G.GAME.round_resets.hands - self.ability.extra
-        ease_hands_played(-self.ability.extra)
+        if #temp_pool > 0 then
+            local eligible_card = pseudorandom_element(temp_pool, pseudoseed('Pessimist'))
+            local edition = {negative = true}
+            eligible_card:set_edition(edition, true)
+            G.GAME.round_resets.hands = G.GAME.round_resets.hands - self.ability.extra
+            ease_hands_played(-self.ability.extra)
+        end
 
       end
 
@@ -412,6 +426,9 @@ function Card.calculate_joker(self, context)
               G.jokers:emplace(card)
               return true end }))
           delay(0.6)
+        end
+        if self.ability.name == 'Pessimist' and not (context.blueprint_card or self).getting_sliced then
+           self:start_dissolve() 
         end
       elseif context.destroying_card then
       elseif context.cards_destroyed then
@@ -666,6 +683,49 @@ function Card.generate_UIBox_ability_table(self)
   return generate_UIBox_ability_tableref(self)
 end
 
+local poker_hands_info_ref = G.FUNCS.get_poker_hand_info
+G.FUNCS.get_poker_hand_info = function(_cards)
+    local poker_hands = evaluate_poker_hand(_cards)
+    local scoring_hand = {}
+    local text,disp_text,loc_disp_text = 'NULL','NULL', 'NULL'
+    if next(poker_hands["Flush Five"]) then text = "Flush Five"; scoring_hand = poker_hands["Flush Five"][1]
+    elseif next(poker_hands["Flush House"]) then text = "Flush House"; scoring_hand = poker_hands["Flush House"][1]
+    elseif next(poker_hands["Five of a Kind"]) then text = "Five of a Kind"; scoring_hand = poker_hands["Five of a Kind"][1]
+    elseif next(poker_hands["Straight Flush"]) then text = "Straight Flush"; scoring_hand = poker_hands["Straight Flush"][1]
+    elseif next(poker_hands["Four of a Kind"]) then text = "Four of a Kind"; scoring_hand = poker_hands["Four of a Kind"][1]
+    elseif next(poker_hands["Full House"]) then text = "Full House"; scoring_hand = poker_hands["Full House"][1]
+    elseif next(poker_hands["Flush"]) then text = "Flush"; scoring_hand = poker_hands["Flush"][1]
+    elseif next(poker_hands["Straight"]) then text = "Straight"; scoring_hand = poker_hands["Straight"][1]
+    elseif next(poker_hands["Three of a Kind"]) then text = "Three of a Kind"; scoring_hand = poker_hands["Three of a Kind"][1]
+    elseif next(poker_hands["Two Pair"]) then text = "Two Pair"; scoring_hand = poker_hands["Two Pair"][1]
+    elseif next(poker_hands["Pair"]) then text = "Pair"; scoring_hand = poker_hands["Pair"][1]
+    elseif next(poker_hands["High Card"]) then text = "High Card"; scoring_hand = poker_hands["High Card"][1] end
+
+    disp_text = text
+    if text =='Straight Flush' then
+        local min = 10
+        for j = 1, #scoring_hand do
+            if scoring_hand[j]:get_id() < min then min =scoring_hand[j]:get_id() end
+        end
+        if min >= 10 then 
+            disp_text = 'Royal Flush'
+        end
+    end
+    if(#scoring_hand > 5) then
+        if text == 'Flush Five' then disp_text = 'Flush Six'
+        elseif text == 'Flush House' then disp_text = 'Flusher House'
+        elseif text == 'Five of a Kind' then disp_text = 'Six of a Kind'
+        elseif text == 'Full House' then disp_text = 'Fuller House'
+        elseif text == 'Two Pair' then disp_text = 'Three Pair'
+        end
+        loc_disp_text = localize(disp_text, 'poker_hands')
+        return text, loc_disp_text, poker_hands, scoring_hand, disp_text
+    end
+    return poker_hands_info_ref(_cards)
+end
+
+
+
 -- Card updates
 local card_updateref = Card.update
 function Card.update(self, dt)
@@ -771,10 +831,11 @@ function Card.is_face(self, from_boss)
   return is_face_ref(self, from_boss)
 end
 
-function addJokersToPools(jokerTable)
+function addJokersToPools(jokerTable, atlas)
   -- Add Jokers to center
   for k, v in pairsByOrder(jokerTable) do
       v.key = k
+      if atlas then v.atlas = atlas end
       v.order = table_length(G.P_CENTER_POOLS['Joker']) + v.order
       G.P_CENTERS[k] = v
       table.insert(G.P_CENTER_POOLS['Joker'], v)
@@ -786,6 +847,171 @@ function addJokersToPools(jokerTable)
   table.sort(G.P_CENTER_POOLS["Joker"], function(a, b)
       return a.order < b.order
   end)
+end
+
+function love.errhand(msg)
+	if G.F_NO_ERROR_HAND then return end
+	msg = tostring(msg)
+
+	local error = msg
+	local file = string.sub(msg, 0,  string.find(msg, ':'))
+	local function_line = string.sub(msg, string.len(file)+1)
+	function_line = string.sub(function_line, 0, string.find(function_line, ':')-1)
+	file = string.sub(file, 0, string.len(file)-1)
+	local trace = debug.traceback()
+	local boot_found, func_found = false, false
+	for l in string.gmatch(trace, "(.-)\n") do
+		if string.match(l, "boot.lua") then
+			boot_found = true
+		elseif boot_found and not func_found then
+			func_found = true
+			trace = ''
+			function_line = string.sub(l, string.find(l, 'in function')+12)..' line:'..function_line
+		end
+
+		if boot_found and func_found then 
+			trace = trace..l..'\n'
+		end
+	end
+	sendDebugMessage("Error: " .. error)
+	sendDebugMessage("File: " .. file)
+	sendDebugMessage("function_line: " .. function_line)
+	sendDebugMessage("Trace: " .. trace)
+
+	if G.SETTINGS.crashreports and _RELEASE_MODE and G.F_CRASH_REPORTS then 
+		local http_thread = love.thread.newThread([[
+			local https = require('https')
+			CHANNEL = love.thread.getChannel("http_channel")
+
+			while true do
+				--Monitor the channel for any new requests
+				local request = CHANNEL:demand()
+				if request then
+					https.request(request)
+				end
+			end
+		]])
+		local http_channel = love.thread.getChannel('http_channel')
+		http_thread:start()
+		local httpencode = function(str)
+			local char_to_hex = function(c)
+				return string.format("%%%02X", string.byte(c))
+			end
+			str = str:gsub("\n", "\r\n"):gsub("([^%w _%%%-%.~])", char_to_hex):gsub(" ", "+")
+			return str
+		end
+		
+
+		local error = msg
+		local file = string.sub(msg, 0,  string.find(msg, ':'))
+		local function_line = string.sub(msg, string.len(file)+1)
+		function_line = string.sub(function_line, 0, string.find(function_line, ':')-1)
+		file = string.sub(file, 0, string.len(file)-1)
+		local trace = debug.traceback()
+		local boot_found, func_found = false, false
+		for l in string.gmatch(trace, "(.-)\n") do
+			if string.match(l, "boot.lua") then
+				boot_found = true
+			elseif boot_found and not func_found then
+				func_found = true
+				trace = ''
+				function_line = string.sub(l, string.find(l, 'in function')+12)..' line:'..function_line
+			end
+
+			if boot_found and func_found then 
+				trace = trace..l..'\n'
+			end
+		end
+
+		http_channel:push('https://958ha8ong3.execute-api.us-east-2.amazonaws.com/?error='..httpencode(error)..'&file='..httpencode(file)..'&function_line='..httpencode(function_line)..'&trace='..httpencode(trace)..'&version='..(G.VERSION))
+	end
+
+	if not love.window or not love.graphics or not love.event then
+		return
+	end
+
+	if not love.graphics.isCreated() or not love.window.isOpen() then
+		local success, status = pcall(love.window.setMode, 800, 600)
+		if not success or not status then
+			return
+		end
+	end
+
+	-- Reset state.
+	if love.mouse then
+		love.mouse.setVisible(true)
+		love.mouse.setGrabbed(false)
+		love.mouse.setRelativeMode(false)
+	end
+	if love.joystick then
+		-- Stop all joystick vibrations.
+		for i,v in ipairs(love.joystick.getJoysticks()) do
+			v:setVibration()
+		end
+	end
+	if love.audio then love.audio.stop() end
+	love.graphics.reset()
+	local font = love.graphics.setNewFont("resources/fonts/m6x11plus.ttf", 20)
+
+	love.graphics.setBackgroundColor(G.C.BLACK)
+	love.graphics.setColor(255, 255, 255, 255)
+
+	love.graphics.clear(love.graphics.getBackgroundColor())
+	love.graphics.origin()
+
+
+	local p = 'Oops! Something went wrong:\n'..msg..'\n\n'..(not _RELEASE_MODE and debug.traceback() or G.SETTINGS.crashreports and
+		'Since you are opted in to sending crash reports, LocalThunk HQ was sent some useful info about what happened.\nDon\'t worry! There is no identifying or personal information. If you would like\nto opt out, change the \'Crash Report\' setting to Off' or
+		'Crash Reports are set to Off. If you would like to send crash reports, please opt in in the Game settings.\nThese crash reports help us avoid issues like this in the future')
+
+	local function draw()
+		local pos = love.window.toPixels(70)
+		love.graphics.clear(love.graphics.getBackgroundColor())
+		love.graphics.printf(p, pos, pos, love.graphics.getWidth() - pos)
+		love.graphics.present()
+	end
+
+	while true do
+		love.event.pump()
+
+		for e, a, b, c in love.event.poll() do
+			if e == "quit" then
+				return
+			elseif e == "keypressed" and a == "escape" then
+				return
+			elseif e == "touchpressed" then
+				local name = love.window.getTitle()
+				if #name == 0 or name == "Untitled" then name = "Game" end
+				local buttons = {"OK", "Cancel"}
+				local pressed = love.window.showMessageBox("Quit "..name.."?", "", buttons)
+				if pressed == 1 then
+					return
+				end
+			end
+		end
+
+		draw()
+
+		if love.timer then
+			love.timer.sleep(0.1)
+		end
+	end
+
+end
+
+
+local set_sprites_ref = Card.set_sprites
+function Card:set_sprites(_center, _front)
+    set_sprites_ref(self, _center, _front)
+    if _center then
+        if _center.soul_pos and _center.atlas then 
+            self.children.floating_sprite = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, self.children.center.atlas, self.config.center.soul_pos)
+            self.children.floating_sprite.role.draw_major = self
+            self.children.floating_sprite.states.hover.can = false
+            self.children.floating_sprite.states.click.can = false
+        end
+    end
+    
 end
 
 function reset_copycat_card()
@@ -807,6 +1033,224 @@ function reset_idol_card()
     reset_idol_card_ref()
     reset_copycat_card()
 end
+
+local parse_highlighted_ref = CardArea.parse_highlighted
+function CardArea.parse_highlighted(self)
+    parse_highlighted_ref(self)
+    local scouter_joker = find_joker('Scouter Joker')
+    if next(scouter_joker) then
+        local val = 0
+        if(#self.highlighted) > 0 then val = G.FUNCS.evaluate_play_scouter() end
+        for i = 1, #scouter_joker do
+            local old_val = scouter_joker[i].ability.extra
+            scouter_joker[i].ability.extra = val
+            if val >= G.GAME.blind.chips and val > old_val then
+                G.E_MANAGER:add_event(Event({
+                    trigger = 'immediate',
+                    func = (function() scouter_joker[i]:juice_up(math.min(4, math.log10(val+1)/5));return true end)
+                }))
+            end
+         end
+    end
+end
+
+local add_to_highlighted_ref = CardArea.add_to_highlighted
+function CardArea.add_to_highlighted(self, card, silent)
+    --if self.config.highlighted_limit <= #self.highlighted then return end
+    if next(find_joker('Pierrot')) and self.config.type ~= 'shop' and self.config.type ~= 'joker' and self.config.type ~= 'consumeable' then
+        if #self.highlighted >= 6 then
+            card:highlight(false)
+        else
+            self.highlighted[#self.highlighted+1] = card
+            card:highlight(true)
+            if not silent then play_sound('cardSlide1') end
+        end
+        if self == G.hand and G.STATE == G.STATES.SELECTING_HAND then
+            self:parse_highlighted()
+        end
+    else
+        add_to_highlighted_ref(self, card, silent)
+    end
+end
+
+
+local evaluate_poker_hand_ref = evaluate_poker_hand
+function evaluate_poker_hand(hand)
+    local results = evaluate_poker_hand_ref(hand)
+    local old_top = results.top
+    results.top = nil
+    if next(get_X_same(6,hand)) and next(get_flush(hand)) then
+      results["Flush Five"] = get_X_same(6,hand)
+      if not results.top then results.top = results["Flush Five"] end
+    end
+
+    if next(get_X_same(6,hand)) then
+      results["Five of a Kind"] = get_X_same(6,hand)
+      if not results.top then results.top = results["Five of a Kind"] end
+    end
+  
+    if next(get_flush(hand)) and next(get_straight(hand)) then
+      local _s, _f, ret = get_straight(hand), get_flush(hand), {}
+      for _, v in ipairs(_f[1]) do
+        ret[#ret+1] = v
+      end
+      for _, v in ipairs(_s[1]) do
+        local in_straight = nil
+        for _, vv in ipairs(_f[1]) do
+          if vv == v then in_straight = true end
+        end
+        if not in_straight then ret[#ret+1] = v end
+      end
+  
+      results["Straight Flush"] = {ret}
+      if not results.top then results.top = results["Straight Flush"] end
+    end
+    if #get_X_same(3,hand) == 2 and next(get_flush(hand)) then
+        local fh_hand = {}
+        local fh = get_X_same(3,hand)
+        local fh_3 = fh[1]
+        local fh_2 = fh[1]
+        for i=1, #fh_3 do
+          fh_hand[#fh_hand+1] = fh_3[i]
+        end
+        for i=1, #fh_2 do
+          fh_hand[#fh_hand+1] = fh_2[i]
+        end
+        table.insert(results["Flush House"], fh_hand)
+        if not results.top then results.top = results["Flush House"] end
+    end
+
+    if #get_X_same(3,hand) == 2 then
+        local fh_hand = {}
+        local r = get_X_same(3,hand)
+        local fh_2a = r[1]
+        local fh_2b = r[2]
+        for i=1, #fh_2a do
+          fh_hand[#fh_hand+1] = fh_2a[i]
+        end
+        for i=1, #fh_2b do
+          fh_hand[#fh_hand+1] = fh_2b[i]
+        end
+        table.insert(results["Full House"], fh_hand)
+        if not results.top then results.top = results["Full House"] end
+    end
+
+    if next(get_flush(hand)) then
+        results["Flush"] = get_flush(hand)
+        if not results.top and #results["Four of a Kind"] == 0 then results.top = results["Flush"] end
+    end
+
+    if next(get_straight(hand)) then
+        results["Straight"] = get_straight(hand)
+        if not results.top then results.top = results["Straight"] end
+    end
+
+    if #get_X_same(2,hand) == 3 then
+      local fh_hand = {}
+      local r = get_X_same(2,hand)
+      local fh_2a = r[1]
+      local fh_2b = r[2]
+      local fh_2c = r[3]
+      for i=1, #fh_2a do
+        fh_hand[#fh_hand+1] = fh_2a[i]
+      end
+      for i=1, #fh_2b do
+        fh_hand[#fh_hand+1] = fh_2b[i]
+      end
+      for i=1, #fh_2c do
+        fh_hand[#fh_hand+1] = fh_2c[i]
+      end
+      table.insert(results["Two Pair"], fh_hand)
+      if not results.top then results.top = results["Two Pair"] end
+    end
+  
+    if results["Five of a Kind"][1] and #results["Five of a Kind"] == 6 then
+      results["Four of a Kind"] = {results["Five of a Kind"][1], results["Five of a Kind"][2], results["Five of a Kind"][3], results["Five of a Kind"][4], results["Five of a Kind"][5]}
+    end
+
+    if not results.top then results.top = old_top end
+    return results
+end
+
+local get_flush_ref = get_flush
+function get_flush(hand)
+    if next(find_joker('Pierrot')) then 
+        local ret = {}
+        local four_fingers = next(find_joker('Four Fingers'))
+        local suits = {
+            "Spades",
+            "Hearts",
+            "Clubs",
+            "Diamonds"
+        }
+        if #hand < (5 - (four_fingers and 1 or 0)) then return ret else
+            for j = 1, #suits do
+            local t = {}
+            local suit = suits[j]
+            local flush_count = 0
+            for i=1, #hand do
+                if hand[i]:is_suit(suit, nil, true) then flush_count = flush_count + 1;  t[#t+1] = hand[i] end 
+            end
+            if flush_count >= (5 - (four_fingers and 1 or 0)) then
+                table.insert(ret, t)
+                return ret
+            end
+            end
+            return {}
+        end
+    end
+    return get_flush_ref(hand)
+end
+
+local get_straight_ref = get_straight
+function get_straight(hand)
+    if next(find_joker('Pierrot')) then 
+        local ret = {}
+        local four_fingers = next(find_joker('Four Fingers'))
+        if #hand < (5 - (four_fingers and 1 or 0)) then return ret else
+            local t = {}
+            local IDS = {}
+            for i=1, #hand do
+            local id = hand[i]:get_id()
+            if id > 1 and id < 15 then
+                if IDS[id] then
+                IDS[id][#IDS[id]+1] = hand[i]
+                else
+                IDS[id] = {hand[i]}
+                end
+            end
+            end
+
+            local straight_length = 0
+            local straight = false
+            local can_skip = next(find_joker('Shortcut')) 
+            local skipped_rank = false
+            for j = 1, 14 do
+            if IDS[j == 1 and 14 or j] then
+                straight_length = straight_length + 1
+                skipped_rank = false
+                for k, v in ipairs(IDS[j == 1 and 14 or j]) do
+                t[#t+1] = v
+                end
+            elseif can_skip and not skipped_rank and j ~= 14 then
+                skipped_rank = true
+            else
+                straight_length = 0
+                skipped_rank = false
+                if not straight then t = {} end
+                if straight then break end
+            end
+            if straight_length >= (5 - (four_fingers and 1 or 0)) then straight = true end 
+            end
+            if not straight then return ret end
+            table.insert(ret, t)
+            return ret
+        end
+    end
+    return get_straight_ref(hand)
+end
+
+
 
 ----------------------------------------------
 ------------MOD CODE END----------------------

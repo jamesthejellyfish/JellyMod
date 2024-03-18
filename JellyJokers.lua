@@ -366,7 +366,7 @@ function Card.calculate_joker(self, context)
       elseif context.playing_card_added and not self.getting_sliced then
       elseif context.first_hand_drawn then
       elseif context.setting_blind and not self.getting_sliced and not self.gettin_rerolled then
-        if self.ability.name == 'Greener Pastures' and not (context.blueprint_card or self).getting_sliced then
+        if self.ability.name == 'Greener Pastures' and not (context.blueprint_card or self).getting_sliced and not context.blueprint then
           local is_dissolved = false
           for i=1,#G.jokers.cards do
               if G.jokers.cards[i].ability.name == self.ability.extra and G.jokers.cards[i].edition.negative then

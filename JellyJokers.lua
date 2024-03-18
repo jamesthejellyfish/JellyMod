@@ -174,7 +174,7 @@ function SMODS.INIT.JellyJokers()
   
 
   init_localization()
-  updateLocalization(localization, "Joker")
+  updateLocalizationJelly(localization, "Joker")
 
   --[[SMODS.Joker:new(
       name, slug, 
@@ -220,43 +220,6 @@ function Card.calculate_joker(self, context)
   local calc_ref = calculate_jokerref(self, context)
 
   if self.ability.set == "Joker" and not self.debuff then
-      if self.ability.name == "Blueprint" then
-          local other_joker = nil
-          for i = 1, #G.jokers.cards do
-              if G.jokers.cards[i] == self then
-                  other_joker = G.jokers.cards[i + 1]
-              end
-          end
-          if other_joker and other_joker ~= self then
-              context.blueprint = (context.blueprint and (context.blueprint + 1)) or 1
-              context.blueprint_card = context.blueprint_card or self
-              if context.blueprint > #G.jokers.cards + 1 then
-                  return
-              end
-              local other_joker_ret = other_joker:calculate_joker(context)
-              if other_joker_ret then
-                  other_joker_ret.card = context.blueprint_card or self
-                  other_joker_ret.colour = G.C.BLUE
-                  return other_joker_ret
-              end
-          end
-      end
-      if self.ability.name == "Brainstorm" then
-          local other_joker = G.jokers.cards[1]
-          if other_joker and other_joker ~= self then
-              context.blueprint = (context.blueprint and (context.blueprint + 1)) or 1
-              context.blueprint_card = context.blueprint_card or self
-              if context.blueprint > #G.jokers.cards + 1 then
-                  return
-              end
-              local other_joker_ret = other_joker:calculate_joker(context)
-              if other_joker_ret then
-                  other_joker_ret.card = context.blueprint_card or self
-                  other_joker_ret.colour = G.C.RED
-                  return other_joker_ret
-              end
-          end
-      end
       if self.ability.name == "Tarlton" then
         local other_joker = nil
         local final_ret = nil

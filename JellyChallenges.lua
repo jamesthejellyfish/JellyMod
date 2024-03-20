@@ -32,9 +32,9 @@ function SMODS.INIT.JellyChallenges()
                 jokers = {
                     {id = 'j_buckleswasher', eternal = true},
                     {id = 'j_swashbuckler', eternal = true},
+
                 },
                 consumeables = {
-    
                 },
                 vouchers = {
                 },
@@ -50,8 +50,6 @@ function SMODS.INIT.JellyChallenges()
                     }
                 }
             },
-
-
             {
                 name = "Sturdy",
                 id = 'c_sturdy_1',
@@ -416,7 +414,7 @@ function SMODS.INIT.JellyChallenges()
                         }
                     },
                     jokers = {
-                        {id = 'j_mime'}
+                        {id = 'j_mime'},
                     },
                     consumeables = {
                     },

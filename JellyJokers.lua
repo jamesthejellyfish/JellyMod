@@ -16,6 +16,8 @@ function SMODS.INIT.JellyJokers()
                    text = {
                       "Copies the effects of",
                       "all other {C:attention}Jokers{}",
+                      "In your possession.",
+                      "{C:inactive}(must be compatible){}"
               },
           },
           j_pierrot = {
@@ -46,9 +48,11 @@ function SMODS.INIT.JellyJokers()
                name = "Scouter Joker",
                    text = {
                       "Tells you what a given hand",
-                      "would score, including all bonuses",
+                      "would score, including all bonuses.",
                       "Current hand would score:",
                       "{C:blue,E:1,S:0.8}#1#{}",
+                      "{C:inactive}(May not score correctly for",
+                      "{C:inactive}conditional effects, such as {C:attention}Wee Joker{C:inactive} or {C:attention}Blackboard{C:inactive}){}"
               },
           },
           j_special_snowflake = {
@@ -82,9 +86,8 @@ function SMODS.INIT.JellyJokers()
                name = "Greener Pastures",
                    text = {
                       "When blind is selected, creates a random",
-                      "{C:dark_edition}negative{} Joker that can't be sold.",
-                      "The joker is replaced every round and",
-                      "is destroyed if this card is destroyed.",
+                      "{C:dark_edition}negative{} Joker that always sells for {C:money}$0{}.",
+                      "The joker is destroyed and replaced every round.",
               },
           },
           j_one_more = {
@@ -150,9 +153,8 @@ function SMODS.INIT.JellyJokers()
                    text = {
                       "if you draw at least 50% of your deck",
                       "during the round, a {C:attention}random{} card",
-                      "in your deck will be {C:red}destroyed{}",
+                      "you didn't draw will be {C:red}destroyed{}",
                       "and a {C:spectral}Spectral{} card will be created",
-          
                    },
           }
   }
@@ -201,7 +203,7 @@ function SMODS.INIT.JellyJokers()
     j_collector=        {order = 13,  unlocked = true,  discovered = true, blueprint_compat = true, eternal_compat = true, rarity = 3, cost = 7, name = "The Collector", pos = {x=2,y=17}, set = "Joker", effect = "Card Buff", cost_mult = 1.0, config = {extra = 1.5}},
     j_buckleswasher=    {order = 14,  unlocked = true,  discovered = true, blueprint_compat = true, eternal_compat = true, rarity = 2, cost = 4, name = "Buckleswasher", pos = {x=3,y=17}, set = "Joker", effect = "Set Mult", cost_mult = 1.0, config = {mult = 1},unlock_condition = {type = 'c_jokers_sold', extra = 20}},
     j_hatter=           {order = 15,  unlocked = true,  discovered = true, blueprint_compat = false, eternal_compat = true, rarity = 2, cost = 7, name = "Mad Hatter",set = "Joker", config = {},  pos = {x=4,y=17}},
-    j_greener_pastures= {order = 16,  unlocked = true,  discovered = true, blueprint_compat = false, eternal_compat = true, rarity = 2, cost = 8, name = "Greener Pastures",set = "Joker", config = {extra = nil},  pos = {x=5,y=17}},
+    j_greener_pastures= {order = 16,  unlocked = true,  discovered = true, blueprint_compat = false, eternal_compat = true, rarity = 2, cost = 8, name = "Greener Pastures",set = "Joker", config = {},  pos = {x=5,y=17}},
     j_special_snowflake={order = 17,  unlocked = true,  discovered = true, blueprint_compat = true, eternal_compat = true, rarity = 2, cost = 6, name = "Special Snowflake",set = "Joker", config = {extra = 0.2},  pos = {x=6,y=17}, soul_pos={x=7, y=17}},
   }
 
@@ -220,15 +222,13 @@ function Card.calculate_joker(self, context)
   local calc_ref = calculate_jokerref(self, context)
 
   if self.ability.set == "Joker" and not self.debuff then
-      if self.ability.name == "Tarlton" then
+      if self.ability.name == "Tarlton" and not context.blueprint then
         local other_joker = nil
         local final_ret = nil
         for i=1,#G.jokers.cards do
             other_joker = G.jokers.cards[i]
-            if other_joker and other_joker ~= self and other_joker.config.center.blueprint_compat then
-                context.blueprint = (context.blueprint and (context.blueprint + 1)) or 1
+            if other_joker and other_joker.ability.name ~= self.ability.name and other_joker.config.center.blueprint_compat then
                 context.blueprint_card = context.blueprint_card or self
-                if context.blueprint > #G.jokers.cards + 1 then return end
                 local other_joker_ret = other_joker:calculate_joker(context)
                 if other_joker_ret then
                     print("new joker ret: " .. other_joker.ability.name)
@@ -257,6 +257,9 @@ function Card.calculate_joker(self, context)
                         end
                         if final_ret[k] and k == "dollars" then 
                             final_ret[k] = final_ret[k] + val 
+                        end
+                        if final_ret[k] and k == "repetitions" then
+                            final_ret[k] = final_ret[k] + val
                         end
                         if final_ret[k] and k == "message" then
                             final_ret[k] = final_ret[k] .. " " .. val
@@ -365,26 +368,16 @@ function Card.calculate_joker(self, context)
       elseif context.skipping_booster then
       elseif context.playing_card_added and not self.getting_sliced then
       elseif context.first_hand_drawn then
-      elseif context.setting_blind and not self.getting_sliced and not self.gettin_rerolled then
+      elseif context.setting_blind and not self.getting_sliced then
         if self.ability.name == 'Greener Pastures' and not (context.blueprint_card or self).getting_sliced and not context.blueprint then
-          local is_dissolved = false
-          for i=1,#G.jokers.cards do
-              if G.jokers.cards[i].ability.name == self.ability.extra and G.jokers.cards[i].edition.negative then
-                  G.jokers.cards[i]:start_dissolve()
-                  is_dissolved = true
-                  break
-              end
-          end
-          if not is_dissolved and self.ability.extra then 
-              self:start_dissolve()
-              return
-          end
           G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
               play_sound('timpani')
               local card = create_card('Joker', G.jokers, false, nil, nil, nil, nil, 'green')
-              card.states.click.can = false
               card:set_edition({negative = true})
-              self.ability.extra = card.ability.name
+              card:set_cost()
+              card.cost = 0
+              card.ability.extra_value = -1000
+              card.sell_cost = 0
               card:add_to_deck()
               G.jokers:emplace(card)
               return true end }))
@@ -403,37 +396,39 @@ function Card.calculate_joker(self, context)
       elseif context.end_of_round then
         if context.individual then
           if self.ability.name == 'Scouter Joker' then self.ability.extra = 0 end
+        elseif context.repetition then
         elseif not context.blueprint then
-          if self.ability.name == "Zeno's Joker" and #G.deck.cards / #G.playing_cards < 0.5 and #G.deck.cards > 0 then
-            local card = pseudorandom_element(G.playing_cards, pseudoseed("Zeno's Joker"))
-            card:remove()
-            
-            if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
-                G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
-                G.E_MANAGER:add_event(Event({
-                    trigger = 'before',
-                    delay = 0.0,
-                    func = (function()
-                            local card = create_card('Spectral',G.consumeables, nil, nil, nil, nil, nil, 'sixth')
-                            card:add_to_deck()
-                            G.consumeables:emplace(card)
-                            G.GAME.consumeable_buffer = 0
-                        return true
-                    end)}))
-                card_eval_status_text(context.blueprint_card or self, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
-            end
+            if self.ability.name == "Zeno's Joker" and #G.playing_cards > 0 and #G.deck.cards / #G.playing_cards <= 0.5 and #G.deck.cards > 0 then
+                local card = pseudorandom_element(G.deck.cards, pseudoseed("Zeno's Joker"))
+                card.destroyed = true
+                card:remove()
+                
+                if #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
+                    G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'before',
+                        delay = 0.0,
+                        func = (function()
+                                local card = create_card('Spectral',G.consumeables, nil, nil, nil, nil, nil, 'sixth')
+                                card:add_to_deck()
+                                G.consumeables:emplace(card)
+                                G.GAME.consumeable_buffer = 0
+                            return true
+                        end)}))
+                    card_eval_status_text(context.blueprint_card or self, 'extra', nil, nil, nil, {message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral})
+                end
 
-            return {
-                message = localize('k_zeno'),
-                colour = G.C.RED
-            }
-          end
+                return {
+                    message = localize('k_zeno'),
+                    colour = G.C.RED
+                }
+            end
         end
       elseif context.repetition then
       elseif context.other_joker then
       elseif context.adding_to_deck then
       elseif context.individual then
-        if self.ability.name == 'Lipographic Jokr' then
+        if self.ability.name == 'Lipographic Jokr' and context.cardarea == G.play then
           local curr_mult = self.ability.extra.mult
           local mult_sub = self.ability.extra.sub
           print("acting on: " .. tostring(context.other_card:get_id()))
@@ -553,17 +548,15 @@ function Card.calculate_joker(self, context)
 
   return calc_ref
 end
---- the good shit ---
 
--- Init variables
-local init_game_objectobjref = Game.init_game_object;
-function Game.init_game_object(self)
-  local gameObj = init_game_objectobjref(self)
-
-  gameObj.extra_gacha_pulls = 0
-  gameObj.used_rkey = false
-
-  return gameObj
+local new_round_ref = new_round
+function new_round()
+    for i=1,#G.jokers.cards do
+        if G.jokers.cards[i].ability.extra_value < -500 then
+            G.jokers.cards[i]:start_dissolve()
+        end
+    end
+    new_round_ref()
 end
 
 -- UIBox garbage / Copied from LushMod. Thanks luscious!
@@ -594,7 +587,7 @@ function Card.generate_UIBox_ability_table(self)
         loc_vars = {self.ability.mult}
       elseif self.ability.name == 'Copycat' then
         customJoker = true 
-        if G.GAME.current_round.copycat_joker_name then loc_vars = {localize{type = 'name_text', key = G.GAME.current_round.copycat_joker_key, set = 'Joker'}} else loc_vars = {"None"}end
+        if (G.GAME.current_round.copycat_joker_name and G.GAME.current_round.copycat_joker_name ~= "None") then loc_vars = {localize{type = 'name_text', key = G.GAME.current_round.copycat_joker_key, set = 'Joker'}} else loc_vars = {"None"}end
       elseif self.ability.name == 'Lipographic Jokr' then 
         customJoker = true 
         loc_vars = {self.ability.extra.mult, self.ability.extra.sub}
@@ -754,14 +747,6 @@ function Card.remove_from_deck(self, from_debuff)
       if self.ability.name == 'Oops! All 1s' then
         for k, v in pairs(G.GAME.probabilities) do 
             G.GAME.probabilities[k] = v*2
-        end
-      end
-      if self.ability.name == 'Greener Pastures' then
-        for i=1,#G.jokers.cards do
-            if G.jokers.cards[i].ability.name == self.ability.extra and G.jokers.cards[i].edition.negative then
-                G.jokers.cards[i]:start_dissolve()
-                break
-            end
         end
       end
   end
@@ -982,7 +967,7 @@ function reset_copycat_card()
   G.GAME.current_round.copycat_joker_key = nil
   local compat_jokers = {}
   for i = 1, #G.jokers.cards do
-      if G.jokers.cards[i].config.center.blueprint_compat and G.jokers.cards[i].ability.name ~= "Copycat" then compat_jokers[#compat_jokers+1] = G.jokers.cards[i] end
+      if G.jokers.cards[i].config.center.blueprint_compat and G.jokers.cards[i].ability.name ~= "Copycat" and G.jokers.cards[i].ability.extra_value >= -500 then compat_jokers[#compat_jokers+1] = G.jokers.cards[i] end
   end
   if #compat_jokers < 1 then return end
   

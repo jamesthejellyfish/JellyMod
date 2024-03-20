@@ -269,8 +269,8 @@ function SMODS.INIT.JellyTarots()
 
     G.localization.misc.v_dictionary.a_xchips = "X#1# Chips"
     init_localization()
-    updateLocalization(tarot_localization, "Tarot")
-    updateLocalization(enhance_localization, "Enhanced")
+    updateLocalizationJelly(tarot_localization, "Tarot")
+    updateLocalizationJelly(enhance_localization, "Enhanced")
 
     local tarots = {
         c_world_rev=        {order = 23,    discovered = true, cost = 3, consumeable = true, name = "The Reverse World", pos = {x=8,y=5}, set = "Tarot", effect = "Suit Conversion", cost_mult = 1.0, config = {no_suit = 'Spades', max_highlighted = 3}},
@@ -547,7 +547,7 @@ function Card.use_consumeable(self, area, copier)
         for i=1, #G.hand.highlighted do
             local suit = pseudorandom_element(proper_suits, pseudoseed("rev_" .. self.ability.consumeable.no_suit))
             sendDebugMessage(tostring(self.ability.consumeable.no_suit))
-            if G.hand.highlighted[i]:is_suit(self.ability.consumeable.no_suit) then 
+            if G.hand.highlighted[i]:is_suit(self.ability.consumeable.no_suit, true) then 
                 sendDebugMessage("Card was " .. tostring(self.ability.consumeable.no_suit))
                 G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function() G.hand.highlighted[i]:change_suit(suit);return true end })) 
             end
@@ -1029,7 +1029,7 @@ function card_eval_status_text(card, eval_type, amt, percent, dir, extra)
 end
 
 
-generate_card_ui_ref = generate_card_ui
+local generate_card_ui_ref = generate_card_ui
 function generate_card_ui(_c, full_UI_table, specific_vars, card_type, badges, hide_desc, main_start, main_end)
     local customCard = false
     if _c.name == 'The Reverse Fool' or _c.name == 'The Reverse Magician' or _c.name == 'The Reverse High Priestess' or _c.name == 'The Reverse Emperor' or _c.name == 'The Reverse Empress' or _c.name == 'The Reverse Hierophant' or _c.name == 'The Reverse Lovers' or _c.name == 'The Reverse Chariot' or _c.name == 'Reverse Justice' or _c.name == 'The Reverse Hermit' or _c.name == 'The Reverse Wheel of Fortune' or _c.name == 'Reverse Strength' or _c.name == 'The Reverse Hanged Man' or _c.name == 'Reverse Death' or _c.name == 'Reverse Temperance' or _c.name == 'The Reverse Devil' or _c.name == 'The Reverse Tower' or _c.name == 'The Reverse Star' or _c.name == 'The Reverse Moon' or _c.name == 'The Reverse Sun' or _c.name == 'The Reverse Judgement' or _c.name == 'The Reverse World' then

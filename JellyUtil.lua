@@ -31,7 +31,7 @@ function pairsByOrder(t, f)
   return iter
 end
 
-function updateLocalization(localizationTable, cardType)
+function updateLocalizationJelly(localizationTable, cardType)
   for k, v in pairs(localizationTable) do
     G.localization.descriptions[cardType][k] = v
   end

@@ -28,9 +28,12 @@ function SMODS.INIT.JellyVouchers()
 
   }
  
-
   init_localization()
   updateLocalizationJelly(localization, "Voucher")
+  if supported_languages[G.SETTINGS.language] then
+    local voucher_localization = assert(loadstring(love.filesystem.read(SMODS.findModByID("JellyUtil").path .. '/localization/' ..G.SETTINGS.language..'/vouchers.lua')))()
+    updateLocalizationJelly(voucher_localization, "Voucher")
+  end
 
   local vouchers = {
     v_dumbell        =   {order = 1,     discovered = true, unlocked = true, available = true, cost = 10, name = "Dumbell", pos = {x=0,y=0}, set = "Voucher", config = {extra = 0.125}},

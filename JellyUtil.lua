@@ -60,6 +60,5 @@ function updateLocalizationJelly(localizationTable, cardType)
       end
   end
 end
-
 ----------------------------------------------
 ------------MOD CODE END----------------------

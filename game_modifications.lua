@@ -6,6 +6,9 @@
 ----------------------------------------------
 ------------MOD CODE -------------------------
   
+supported_languages = {["ru"] = true}
+G.LANGUAGES['ru'].beta = nil
+
 G.FUNCS.evaluate_play = function(e)
     local text,disp_text,poker_hands,scoring_hand,non_loc_disp_text = G.FUNCS.get_poker_hand_info(G.play.cards)
     
@@ -1138,19 +1141,19 @@ function Card:draw(layer)
                 end
                 if self.edition and self.edition.holo then
                     self.children.center:draw_shader('holo', nil, self.ARGS.send_to_shader)
-                    if self.children.front and self.ability.effect ~= 'Stone Card' and self.ability.effect ~= 'Coal Card' then
+                    if self.children.front and self.ability.effect ~= 'Stone Card' and self.ability.effect ~= 'Coal Card' and self.ability.effect ~= 'Blank Card' then
                         self.children.front:draw_shader('holo', nil, self.ARGS.send_to_shader)
                     end
                 end
                 if self.edition and self.edition.foil then
                     self.children.center:draw_shader('foil', nil, self.ARGS.send_to_shader)
-                    if self.children.front and self.ability.effect ~= 'Stone Card' and self.ability.effect ~= 'Coal Card' then
+                    if self.children.front and self.ability.effect ~= 'Stone Card' and self.ability.effect ~= 'Coal Card' and self.ability.effect ~= 'Blank Card' then
                         self.children.front:draw_shader('foil', nil, self.ARGS.send_to_shader)
                     end
                 end
                 if self.edition and self.edition.polychrome then
                     self.children.center:draw_shader('polychrome', nil, self.ARGS.send_to_shader)
-                    if self.children.front and self.ability.effect ~= 'Stone Card' and self.ability.effect ~= 'Coal Card' then
+                    if self.children.front and self.ability.effect ~= 'Stone Card' and self.ability.effect ~= 'Coal Card' and self.ability.effect ~= 'Blank Card' then
                         self.children.front:draw_shader('polychrome', nil, self.ARGS.send_to_shader)
                     end
                 end
@@ -1198,13 +1201,13 @@ function Card:draw(layer)
                 end
                 if self.debuff then
                     self.children.center:draw_shader('debuff', nil, self.ARGS.send_to_shader)
-                    if self.children.front and self.ability.effect ~= 'Stone Card' and self.ability.effect ~= 'Coal Card' then
+                    if self.children.front and self.ability.effect ~= 'Stone Card' and self.ability.effect ~= 'Coal Card' and self.ability.effect ~= 'Blank Card' then
                         self.children.front:draw_shader('debuff', nil, self.ARGS.send_to_shader)
                     end
                 end
                 if self.greyed then
                     self.children.center:draw_shader('played', nil, self.ARGS.send_to_shader)
-                    if self.children.front and self.ability.effect ~= 'Stone Card' and self.ability.effect ~= 'Coal Card' then
+                    if self.children.front and self.ability.effect ~= 'Stone Card' and self.ability.effect ~= 'Coal Card' and self.ability.effect ~= 'Blank Card' then
                         self.children.front:draw_shader('played', nil, self.ARGS.send_to_shader)
                     end
                 end
@@ -1254,6 +1257,38 @@ function Card:draw(layer)
         add_to_drawhash(self)
         self:draw_boundingrect()
     end
+end
+
+
+function create_UIBox_your_collection_enhancements(exit)
+  local deck_tables = {}
+
+  G.your_collection = {}
+  for j = 1, 2 do
+    G.your_collection[j] = CardArea(
+      G.ROOM.T.x + 0.2*G.ROOM.T.w/2,G.ROOM.T.h,
+      4.25*G.CARD_W,
+      1.03*G.CARD_H, 
+      {card_limit = 8, type = 'title', highlight_limit = 0})
+    table.insert(deck_tables, 
+    {n=G.UIT.R, config={align = "cm", padding = 0, no_fill = true}, nodes={
+      {n=G.UIT.O, config={object = G.your_collection[j]}}
+    }}
+    )
+  end
+
+  for i = 1, 8 do
+    for j = 1, #G.your_collection do
+      local center = G.P_CENTER_POOLS["Enhanced"][i+(j-1)*8]
+      local card = Card(G.your_collection[j].T.x + G.your_collection[j].T.w/2, G.your_collection[j].T.y, G.CARD_W, G.CARD_H, G.P_CARDS.empty, center)
+      G.your_collection[j]:emplace(card)
+    end
+  end
+  
+  local t = create_UIBox_generic_options({ infotip = localize('ml_edition_seal_enhancement_explanation'), back_func = exit or 'your_collection', snap_back = true, contents = {
+            {n=G.UIT.R, config={align = "cm", minw = 2.5, padding = 0.1, r = 0.1, colour = G.C.BLACK, emboss = 0.05}, nodes=deck_tables},
+          }})
+  return t
 end
 
 ----------------------------------------------

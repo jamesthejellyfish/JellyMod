@@ -269,8 +269,16 @@ function SMODS.INIT.JellyTarots()
 
     G.localization.misc.v_dictionary.a_xchips = "X#1# Chips"
     init_localization()
+
+
     updateLocalizationJelly(tarot_localization, "Tarot")
     updateLocalizationJelly(enhance_localization, "Enhanced")
+    if supported_languages[G.SETTINGS.language] then
+        local tarot_localization = assert(loadstring(love.filesystem.read(SMODS.findModByID("JellyUtil").path .. '/localization/' ..G.SETTINGS.language..'/tarots.lua')))()
+        local enhance_localization = assert(loadstring(love.filesystem.read(SMODS.findModByID("JellyUtil").path .. '/localization/' ..G.SETTINGS.language..'/enhancements.lua')))()
+        updateLocalizationJelly(tarot_localization, "Tarot")
+        updateLocalizationJelly(enhance_localization, "Enhanced")
+    end
 
     local tarots = {
         c_world_rev=        {order = 23,    discovered = true, cost = 3, consumeable = true, name = "The Reverse World", pos = {x=8,y=5}, set = "Tarot", effect = "Suit Conversion", cost_mult = 1.0, config = {no_suit = 'Spades', max_highlighted = 3}},
@@ -299,9 +307,9 @@ function SMODS.INIT.JellyTarots()
 
     local enhancements = {
         m_bonus_rev={max = 500, order = 10,name = "Hand Bonus", set = "Enhanced", pos = {x=2, y=5}, effect = "Hand Bonus Card", label = "Hand Bonus Card", config = {extra = {h_bonus = 20}}},
+        m_mult_rev= {max = 500,order = 12,name = "Hand Mult", set = "Enhanced", pos = {x=3, y=5}, effect = "Hand Mult Card", label = "Hand Mult Card", config = {h_mult = 2}},
         m_brass =   {max = 500, order = 10,name = "Brass Card", set = "Enhanced", pos = {x=4, y=5}, effect = "Brass Card", label = "Brass Card", config = {extra = {h_x_chips = 1.5}}},
         m_fools_gold={max = 500,order = 11,name = "Fool's Gold Card", set = "Enhanced", pos = {x=0, y=5}, effect = "Fool's Gold Card", label = "Fool's Gold Card", config = {extra = {h_bonus = 10}, h_mult = 4, h_dollars = -1}},
-        m_mult_rev= {max = 500,order = 12,name = "Hand Mult", set = "Enhanced", pos = {x=3, y=5}, effect = "Hand Mult Card", label = "Hand Mult Card", config = {h_mult = 2}},
         m_blank =   {max = 500,order = 13,name = "Blank Card", set = "Enhanced", pos = {x=1, y=0}, effect = "Blank Card", label = "Blank Card", config = {}},
         m_unlucky = {max = 500, order = 14, name = "Unlucky Card", set = "Enhanced", pos = {x=5,y=5}, effect = "Unlucky Card", label = "Unlucky Card", config = {Xmult = 1.5, mult = -20, p_dollars = -15}},
         m_wooden =  {max = 500, order = 15, name = "Wooden Card", set = "Enhanced", pos = {x=1,y=5}, effect = "Wooden Card", label = "Wooden Card", config = {Xmult = 2, extra = 2}},

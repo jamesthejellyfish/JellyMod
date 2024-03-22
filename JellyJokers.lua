@@ -172,12 +172,12 @@ function SMODS.INIT.JellyJokers()
     G.localization.misc['poker_hands']['Fuller House'] = 'Fuller House'
     G.localization.misc['poker_hands']['Three Pair'] = 'Three Pair'
 
-
-  
-
   init_localization()
   updateLocalizationJelly(localization, "Joker")
-
+  if supported_languages[G.SETTINGS.language] then
+    local joker_localization = assert(loadstring(love.filesystem.read(SMODS.findModByID("JellyUtil").path .. '/localization/' ..G.SETTINGS.language..'/jokers.lua')))()
+    updateLocalizationJelly(joker_localization, "Joker")
+  end
   --[[SMODS.Joker:new(
       name, slug, 
       config,
@@ -229,20 +229,14 @@ function Card.calculate_joker(self, context)
             other_joker = G.jokers.cards[i]
             if other_joker and other_joker.ability.name ~= self.ability.name and other_joker.config.center.blueprint_compat then
                 context.blueprint_card = context.blueprint_card or self
+                context.blueprint = 1
                 local other_joker_ret = other_joker:calculate_joker(context)
-                if other_joker_ret then
-                    print("new joker ret: " .. other_joker.ability.name)
-                end
                 if final_ret == nil and other_joker_ret ~= nil then 
-                    print("new return value: " .. other_joker.ability.name)
                     final_ret = other_joker_ret
                     final_ret.card = context.blueprint_card or self
                     final_ret.colour = G.C.RED
                 elseif other_joker_ret then
-                    print("beginning fusion:")
                     for k, val in pairs(other_joker_ret) do
-                        print("current key: " .. k )
-                        print("current value: " .. tostring(val))
                         if not final_ret[k] then
                             final_ret[k] = val
                         end
@@ -264,7 +258,6 @@ function Card.calculate_joker(self, context)
                         if final_ret[k] and k == "message" then
                             final_ret[k] = final_ret[k] .. " " .. val
                         end
-                        print("new value: " .. tostring(final_ret[k]))
                     end
                 end
             end

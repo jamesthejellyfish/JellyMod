@@ -278,14 +278,20 @@ function SMODS.INIT.JellyChallenges()
                         }
                     },
                     jokers = {
-                        {id = 'j_hatter', eternal=true, negative=true},
+                        {id = 'j_tarlton'},
+                        {id = 'j_tarlton'},
+                        {id = 'j_triboulet'},
+                        {id = 'j_triboulet'},
+                        {id = 'j_sock_and_buskin'},
+                        {id = 'j_sock_and_buskin'},
+                        {id = 'j_mmc_dagonet'},
                     },
                     consumeables = {
                     },
                     vouchers = {
                     },
                     deck = {
-                        cards = {{s='D',r='2'},{s='C',r='2'},{s='S',r='K'},{s='H',r='K'},{s='C',r='K',e='m_wooden',g='Red',d='polychrome'},{s='S',r='2',e='m_bonus',g='Purple',d='holo'},{s='H',r='2',e='m_mult', g='Gold',d='foil'},{s='D',r='K',e='m_lucky', g='Blue'}},
+                        cards = {{s='C',r='K',e='m_glass',g='Red',d='polychrome'},{s='C',r='K',e='m_glass',g='Red',d='polychrome'},{s='C',r='K',e='m_glass',g='Red',d='polychrome'},{s='C',r='K',e='m_glass',g='Red',d='polychrome'},{s='C',r='K',e='m_glass',g='Red',d='polychrome'},{s='C',r='K',e='m_glass',g='Red',d='polychrome'},{s='C',r='K',e='m_glass',g='Red',d='polychrome'},{s='C',r='K',e='m_glass',g='Red',d='polychrome'},{s='C',r='K',e='m_glass',g='Red',d='polychrome'},{s='C',r='K',e='m_glass',g='Red',d='polychrome'},{s='C',r='K',e='m_glass',g='Red',d='polychrome'},},
                         type = 'Challenge Deck'
                     },
                     restrictions = {

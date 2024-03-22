@@ -32,3 +32,15 @@ Credit to [LushMod](https://github.com/lusciousdev/LushMod) for some of the code
 
 - 10 new challenges to show off the fun synergies that the new jokers and tarots have.
 ![Challenges](Screenshots/Challenges.png)
+
+
+# Contributing:
+If you would like to contribute, make a PR and describe the nature of your contribution, and I may merge it in!
+## Localization
+If you know another language and would like to localize Jellymod into your language, you can make a PR after performing the following steps:
+  1. add your language to the list of supported_languages in the game_modificatins.lua file
+  2. add a new folder to the "localization" folder with the name of your translated language (i.e. "ru")
+  3. add tarots.lua, enhancements.lua, jokers.lua, and vouchers.lua to the folder
+  4. copy the localizations from the respective files, make your translations, and then return the changes from each file
+  5. use the russian translation (provided by @aigiz010 on Discord) as a reference.
+To use the localizations, simply change your language to the desired one and reset the game.  

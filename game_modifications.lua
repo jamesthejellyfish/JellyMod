@@ -846,7 +846,7 @@ G.FUNCS.evaluate_play_scouter = function(e)
 end
 
 G.FUNCS.can_play = function(e)
-    if #G.hand.highlighted <= 0 or G.GAME.blind.block_play or #G.hand.highlighted > 6 then 
+    if #G.hand.highlighted <= 0 or G.GAME.blind.block_play or #G.hand.highlighted > 5 + #find_joker("Pierrot") then 
         e.config.colour = G.C.UI.BACKGROUND_INACTIVE
         e.config.button = nil
     else

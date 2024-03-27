@@ -23,9 +23,8 @@ function SMODS.INIT.JellyJokers()
           j_pierrot = {
                name = "Pierrot",
                    text = {
-                      "Allows for {C:attention}6{}",
-                      "cards to be selected and played,",
-                      "instead of 5.",
+                      "Allows for {C:attention}+1{}",
+                      "card to be selected and played,",
               },
           },
           j_prosopagnosia = {
@@ -156,26 +155,175 @@ function SMODS.INIT.JellyJokers()
                       "you didn't draw will be {C:red}destroyed{}",
                       "and a {C:spectral}Spectral{} card will be created",
                    },
-          }
+          },
+          j_wise_penny = {
+                name = "Wise Penny",
+                    text = {
+                        "if you {C:warning}don't{} spend money at a shop, a random",
+                        "nonsealed card gets a {C:money}gold seal{}",
+                    },
+                },
+          j_furnace = {
+            name = "Furnace",
+                text = {
+                    "all {C:attention}coal cards{} upgrade at the ",
+                    "{C:attention}same time",
+                },
+            },
+          j_fridge = {
+            name = "Fridge",
+                text = {
+                   "{C:attention}Food Jokers{} no longer",
+                   "decay or go extinct.",
+                },
+            },
+          j_krampus = {
+            name = "Krampus",
+                text = {
+                   "Adds a {C:attention}Coal Card{} to your hand",
+                   "at the start of each blind.",
+                },
+            },
+          j_edition_eater = {
+            name = "Edition Eater",
+                text = {
+                   "When blind is Selected,",
+                   "removes the edition of the joker to its right.",
+                   "Gains {X:mult,C:white}xN{} Mult per edition eaten.",
+                   "{C:inactive}(N = {C:dark_edition}Foil{} {X:mult,C:white}x#1#{C:inactive}, {C:dark_edition}Holographic{} {X:mult,C:white}x#2#{C:inactive}, ",
+                   "{C:dark_edition}Negative{} {X:mult,C:white}x#4#{C:inactive}, {C:dark_edition}Polychrome{} {X:mult,C:white}x#3#{C:inactive})",
+                   "(Will {C:warning}Destroy{} the joker if it's negative and there's no room)",
+                   "Currently {X:mult,C:white}x#5#{} Mult."
+                },
+            },
+          j_magnate = {
+            name = "Magnate",
+                text = {
+                   "standard packs will only contain",
+                   "cards that are the {C:attention}same rank and suit{}", 
+                   "as cards already in your deck.",
+                },
+            },
+          j_greedy_pot = {
+            name = "Greedy Pot",
+                text = {
+                   "After play or discard, always draw", 
+                   "{C:attention}2 more{} cards than you would otherwise.",
+                },
+            },
+          j_pink_menace = {
+            name = "The Pink Menace",
+                text = {
+                   "When blind is selected,",
+                   "if the card to the right of this one is a food joker,", 
+                   "{C:attention}consume it{}, and for the next round, The",
+                   "Pink Menace provides {C:attention}twice{} the benefit",
+                   "that you would have received from the food joker.",
+                },
+            },
+          j_caviar = {
+            name = "Caviar",
+                text = {
+                   "gives {C:money}$#1#{} per hand played.",
+                   "reduces by {C:attention}#2#{} each round,",
+                },
+            },
+          j_chef_joker = {
+            name = "Chef Joker",
+                text = {
+                   "When blind is selected,",
+                   "create a random food joker", 
+                   "{C:inactive}(Must have room.)",
+                },
+            },
+          j_brownie = {
+            name = "Two-Bite Brownie",
+                text = {
+                   "retriggers all twos {C:attention}#1#{} times",
+                   "reduces by #2# each round",
+                },
+            },
+          j_mineral_deposit = {
+            name = "Mineral Deposit",
+                text = {
+                   "retriggers all cards that have",
+                   "{C:attention}no rank or suit{}",
+                },
+            },
+          j_glutton_joker = {
+            name = "Glutton Joker",
+                text = {
+                   "{X:mult,C:white}x#1#{} Mult for every food joker that has been",
+                   "{C:attention}consumed{} this game",
+                   "Currently {X:mult,C:white}x#2#{} Mult"
+                },
+            },
+
+  }
+
+  local food_localization = {
+    food_jokers = {
+        name = "Food Jokers",
+            text = {
+                "Food Jokers depict food, and",
+                "{C:attention}decay/destroy{} themselves over time.",
+                "{C:inactive}(i.e. {C:attention}Gros Michel{C:inactive}, {C:attention}Ramen{C:inactive}, {C:attention}Popcorn{C:inactive}, etc.)"
+            }
+    }
   }
   
     -- Misc localization
     G.localization.misc.dictionary.k_no_you = "Reversed!"
     G.localization.misc.dictionary.k_hatter = "CHANGE PLACES!"
     G.localization.misc.dictionary.k_zeno = "Halfway!"
+    G.localization.misc.dictionary.k_chilled = "Chilled!"
+    G.localization.misc.dictionary.k_furnace_heat = "Heating Up!"
+    G.localization.misc.dictionary.k_coal_stone = "+1 Coal"
+    G.localization.misc.dictionary.k_unwise_penny = "An Unwise Investment!"
+    G.localization.misc.dictionary.k_wise_penny = "A Wise Investment!"
+    G.localization.misc.dictionary.k_consumed = "Consumed!"
 
+    digits = {
+        [1] = "One",
+        [2] = "Two",
+        [3] = "Three",
+        [4] = "Four",
+        [5] = "Five",
+        [6] = "Six",
+        [7] = "Seven",
+        [8] = "Eight",
+        [9] = "Nine",
+        [10] = "Ten",
+        [11] = "Eleven",
+        [12] = "Twelve",
+        [13] = "Thriteen",
+        [14] = "Fourteen",
+        [15] = "Fifteen",
+        [16] = "Sixteen",
+        [17] = "Seventeen",
+        [18] = "Eighteen",
+        [19] = "Nineteen",
+        [20] = "Twenty"
+    }
 
-
-    G.localization.misc['poker_hands']['Six of a Kind'] = 'Six of a Kind'
-    G.localization.misc['poker_hands']['Flush Six'] = 'Flush Six'
-    G.localization.misc['poker_hands']['Flusher House'] = 'Flusher House'
-    G.localization.misc['poker_hands']['Fuller House'] = 'Fuller House'
-    G.localization.misc['poker_hands']['Three Pair'] = 'Three Pair'
+    for i=6,20 do
+        G.localization.misc['poker_hands'][digits[i] .. ' of a Kind'] = digits[i] .. ' of a Kind'
+        G.localization.misc['poker_hands']['Flush ' .. digits[i]] = 'Flush ' .. digits[i]
+        if i % 2 == 0 then
+            local est = 'er'
+            if i > 7 then est = string.rep("est", math.floor((i-6)/2)) end
+            G.localization.misc['poker_hands']['Flush'.. est ..' House'] = 'Flush' .. est .. ' House'
+            G.localization.misc['poker_hands']['Full'.. est ..' House'] = 'Full' .. est .. ' House'
+            G.localization.misc['poker_hands'][digits[i/2] .. ' Pair'] = digits[i/2] .. ' Pair'
+        end
+    end
+    
 
   init_localization()
   updateLocalizationJelly(localization, "Joker")
+  updateLocalizationJelly(food_localization, "Other")
   if supported_languages[G.SETTINGS.language] then
-    local joker_localization = assert(loadstring(love.filesystem.read(SMODS.findModByID("JellyUtil").path .. '/localization/' ..G.SETTINGS.language..'/jokers.lua')))()
+    local joker_localization = assert(loadstring(love.filesystem.read(SMODS.findModByID("JellyJokers").path .. '/localization/' ..G.SETTINGS.language..'/jokers.lua')))()
     updateLocalizationJelly(joker_localization, "Joker")
   end
   --[[SMODS.Joker:new(
@@ -205,6 +353,20 @@ function SMODS.INIT.JellyJokers()
     j_hatter=           {order = 15,  unlocked = true,  discovered = true, blueprint_compat = false, eternal_compat = true, rarity = 2, cost = 7, name = "Mad Hatter",set = "Joker", config = {},  pos = {x=4,y=17}},
     j_greener_pastures= {order = 16,  unlocked = true,  discovered = true, blueprint_compat = false, eternal_compat = true, rarity = 2, cost = 8, name = "Greener Pastures",set = "Joker", config = {},  pos = {x=5,y=17}},
     j_special_snowflake={order = 17,  unlocked = true,  discovered = true, blueprint_compat = true, eternal_compat = true, rarity = 2, cost = 6, name = "Special Snowflake",set = "Joker", config = {extra = 0.2},  pos = {x=6,y=17}, soul_pos={x=7, y=17}},
+    
+    j_glutton_joker=    {order = 18,  unlocked = true,  discovered = true, blueprint_compat = true, eternal_compat = true, rarity = 2, cost = 6, name = "Glutton Joker",set = "Joker", config = {extra = 1},  pos = {x=2,y=14}},
+    j_mineral_deposit=  {order = 19,  unlocked = true,  discovered = true, blueprint_compat = true, eternal_compat = true, rarity = 2, cost = 5, name = "Mineral Deposit",set = "Joker", config = {extra = 1},  pos = {x=1,y=14}},
+    j_brownie=          {order = 20,  unlocked = true,  discovered = true, blueprint_compat = true, eternal_compat = false, rarity = 1, cost = 4, name = "Two-Bite Brownie",set = "Joker", config = {extra = {retriggers=2, retrigger_mod=1}},  pos = {x=0,y=14}},
+    j_caviar=           {order = 21,  unlocked = true,  discovered = true, blueprint_compat = true, eternal_compat = false, rarity = 2, cost = 2, name = "Caviar",set = "Joker", config = {extra = {dollars = 5, dollar_mod = 1}},  pos = {x=9,y=15}},
+    j_chef_joker=       {order = 22,  unlocked = true,  discovered = true, blueprint_compat = true, eternal_compat = true, rarity = 2, cost = 5, name = "Chef Joker",set = "Joker", config = {},  pos = {x=8,y=15}},
+    j_pink_menace=      {order = 23,  unlocked = true,  discovered = true, blueprint_compat = true, eternal_compat = true, rarity = 2, cost = 3, name = "The Pink Menace",set = "Joker", config = {extra = {eaten = nil, val = 0}},  pos = {x=7,y=15}},
+    j_greedy_pot=       {order = 24,  unlocked = true,  discovered = true, blueprint_compat = false, eternal_compat = true, rarity = 3, cost = 10, name = "Greedy Pot",set = "Joker", config = {},  pos = {x=6,y=15}},
+    j_magnate=          {order = 25,  unlocked = true,  discovered = true, blueprint_compat = false, eternal_compat = true, rarity = 2, cost = 5, name = "Magnate",set = "Joker", config = {},  pos = {x=5,y=15}},
+    j_edition_eater=    {order = 26,  unlocked = true,  discovered = true, blueprint_compat = true, eternal_compat = true, rarity = 2, cost = 8, name = "Edition Eater",set = "Joker", config = {extra = {foil = 0.5, holo = 1, polychrome = 2, negative = 1.5, Xmult = 1}},  pos = {x=4,y=15}},
+    j_krampus=          {order = 27,  unlocked = true,  discovered = true, blueprint_compat = true, eternal_compat = true, rarity = 2, cost = 6, name = "Krampus",set = "Joker", config = {},  pos = {x=3,y=15}},
+    j_fridge=           {order = 28,  unlocked = true,  discovered = true, blueprint_compat = false, eternal_compat = true, rarity = 2, cost = 3, name = "Fridge",set = "Joker", config = {},  pos = {x=2,y=15}},
+    j_furnace=          {order = 29,  unlocked = true,  discovered = true, blueprint_compat = false, eternal_compat = true, rarity = 3, cost = 6, name = "Furnace",set = "Joker", config = {},  pos = {x=1,y=15}},
+    j_wise_penny=       {order = 30,  unlocked = true,  discovered = true, blueprint_compat = true, eternal_compat = true, rarity = 2, cost = 7, name = "Wise Penny",set = "Joker", config = {extra = true},  pos = {x=0,y=15}},
   }
 
   -- Add sprites
@@ -213,13 +375,61 @@ function SMODS.INIT.JellyJokers()
   addJokersToPools(jokers, "JellyJokers")
 end
 
+local init_game_objectobjref = Game.init_game_object
+function Game.init_game_object(self)
+    local gameObj = init_game_objectobjref(self)
+
+    gameObj.foods_eaten = 0
+    gameObj.food_jokers_list = {["Gros Michel"] = 'j_gros_michel',
+                      ["Cavendish"] = 'j_cavendish',
+                      ["Popcorn"] = 'j_popcorn',
+                      ["Ice Cream"] = 'j_ice_cream',
+                      ["Ramen"] = 'j_ramen',
+                      ["Seltzer"] = 'j_selzer',
+                      ["Turtle Bean"] = 'j_turtle_bean',
+                      ["Two-Bite Brownie"] = 'j_brownie',
+                      ["Caviar"] = 'j_caviar',
+                    }
+
+    return gameObj
+end
+
 local calculate_jokerref = Card.calculate_joker
 function Card.calculate_joker(self, context)
   if self.ability.name == "Hiker" and context.scouter then return end
   if self.ability.name == "To Do List" and context.scouter then return end
   if self.ability.name == "Matador" and context.scouter then return end
   if self.ability.name == "Mr. Bones" and context.scouter then return end
+  if G.GAME.food_jokers_list[self.ability.name] and next(find_joker("Fridge")) and not context.blueprint then
+    if self.ability.name == "Ramen" then
+        if context.discard then
+            return {
+                message = localize('k_chilled'),
+                colour = G.C.FILTER
+            }
+        end
+    elseif self.ability.name == "Seltzer" then
+        if context.after then
+            return {
+                message = localize('k_chilled'),
+                colour = G.C.FILTER
+            }
+        end
+    elseif context.end_of_round and not context.repetition then 
+        return {
+            message = localize('k_chilled'),
+            colour = G.C.FILTER
+        }
+    end
+  end
+
   local calc_ref = calculate_jokerref(self, context)
+  if calc_ref then
+        if calc_ref.message == localize('k_eaten_ex') or calc_ref.message == localize('k_drank_ex') or calc_ref.message == localize('k_extinct_ex') then
+            G.GAME.foods_eaten = G.GAME.foods_eaten + 1
+        end
+  end
+
 
   if self.ability.set == "Joker" and not self.debuff then
       if self.ability.name == "Tarlton" and not context.blueprint then
@@ -287,7 +497,15 @@ function Card.calculate_joker(self, context)
     end
 
       if context.open_booster then
+        if self.ability.name == "Wise Penny" and self.ability.extra and context.card.cost > 0 then
+            self.ability.extra = false
+            card_eval_status_text(context.blueprint_card or self, 'extra', nil, nil, nil, {message = localize('k_unwise_penny'), colour = G.C.RED})
+        end
       elseif context.buying_card then
+        if self.ability.name == "Wise Penny" and self.ability.extra then
+            self.ability.extra = false
+            card_eval_status_text(context.blueprint_card or self, 'extra', nil, nil, nil, {message = localize('k_unwise_penny'), colour = G.C.RED})
+        end
       elseif context.selling_self then
 
         if self.ability.name == 'One More Time!' and not context.blueprint and G.GAME.blind:get_type() then
@@ -356,12 +574,35 @@ function Card.calculate_joker(self, context)
 
       elseif context.selling_card then
       elseif context.reroll_shop then
+        if self.ability.name == "Wise Penny" and self.ability.extra and G.GAME.current_round.reroll_cost > 0 then
+            self.ability.extra = false
+            card_eval_status_text(context.blueprint_card or self, 'extra', nil, nil, nil, {message = localize('k_unwise_penny'), colour = G.C.RED})
+        end
       elseif context.ending_shop then
+        if self.ability.name == "Wise Penny" then
+            if self.ability.extra then
+                local eligible_cards = {}
+                for k, v in ipairs(G.deck.cards) do
+                    if not v.seal then
+                        eligible_cards[#eligible_cards+1] = v
+                    end
+                end
+                if #eligible_cards > 0 then
+                    local chosen_card = pseudorandom_element(eligible_cards, pseudoseed('wise_penny'))
+                    chosen_card:set_seal('Gold', true)
+                    card_eval_status_text(context.blueprint_card or self, 'extra', nil, nil, nil, {message = localize('k_wise_penny'), colour = G.C.SECONDARY_SET.Enhanced})
+                end
+            end
+        end
       elseif context.skip_blind then
       elseif context.skipping_booster then
       elseif context.playing_card_added and not self.getting_sliced then
       elseif context.first_hand_drawn then
       elseif context.setting_blind and not self.getting_sliced then
+        if self.ability.name == "Wise Penny" and not (context.blueprint_card or self).getting_sliced and not context.blueprint then
+            self.ability.extra = true
+        end
+
         if self.ability.name == 'Greener Pastures' and not (context.blueprint_card or self).getting_sliced and not context.blueprint then
           G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
               play_sound('timpani')
@@ -376,8 +617,129 @@ function Card.calculate_joker(self, context)
               return true end }))
           delay(0.6)
         end
-        if self.ability.name == 'Pessimist' and not (context.blueprint_card or self).getting_sliced then
+        if self.ability.name == 'Pessimist' and not (context.blueprint_card or self).getting_sliced and not context.blueprint then
            self:start_dissolve() 
+        end
+        if self.ability.name == 'Chef Joker' and not (context.blueprint_card or self).getting_sliced then
+            local jokers_to_create = math.min(1, G.jokers.config.card_limit - (#G.jokers.cards + G.GAME.joker_buffer))
+            G.GAME.joker_buffer = G.GAME.joker_buffer + jokers_to_create
+            local food_joker_keys = {}
+            for k, v in pairs(G.GAME.food_jokers_list) do
+                if not next(find_joker(k)) and (k ~= "Cavendish" or G.GAME.pool_flags.gros_michel_extinct)then 
+                    food_joker_keys[#food_joker_keys+1] = v
+                end
+            end
+            if #food_joker_keys > 0 then
+                G.E_MANAGER:add_event(Event({
+                    func = function() 
+                        for i = 1, jokers_to_create do
+                            local card = create_card('Joker', G.jokers, nil, 0, nil, nil, pseudorandom_element(food_joker_keys, pseudoseed('chef_joker')), nil)
+                            card:add_to_deck()
+                            G.jokers:emplace(card)
+                            card:start_materialize()
+                            G.GAME.joker_buffer = 0
+                        end
+                        return true
+                    end}))   
+                    card_eval_status_text(context.blueprint_card or self, 'extra', nil, nil, nil, {message = localize('k_plus_joker'), colour = G.C.BLUE})
+            end
+         end
+        if self.ability.name == "Krampus" and not (context.blueprint_card or self).getting_sliced then
+            G.E_MANAGER:add_event(Event({
+                func = function() 
+                    local front = pseudorandom_element(G.P_CARDS, pseudoseed('krampus_fr'))
+                    G.playing_card = (G.playing_card and G.playing_card + 1) or 1
+                    local card = Card(G.play.T.x + G.play.T.w/2, G.play.T.y, G.CARD_W, G.CARD_H, front, G.P_CENTERS.m_coal, {playing_card = G.playing_card})
+                    card:start_materialize({G.C.SECONDARY_SET.Enhanced})
+                    G.play:emplace(card)
+                    table.insert(G.playing_cards, card)
+                    return true
+                end}))
+            card_eval_status_text(context.blueprint_card or self, 'extra', nil, nil, nil, {message = localize('k_coal_stone'), colour = G.C.SECONDARY_SET.Enhanced})
+
+            G.E_MANAGER:add_event(Event({
+                func = function() 
+                    G.deck.config.card_limit = G.deck.config.card_limit + 1
+                    return true
+                end}))
+                draw_card(G.play,G.deck, 90,'up', nil)  
+            playing_card_joker_effects({true})
+        end
+        if self.ability.name == 'The Pink Menace' and not context.blueprint then
+            if self.ability.extra.eaten == "h_size" then
+                G.hand:change_size(-self.ability.extra.val)
+            end
+            self.ability.extra.val = 0
+            self.ability.extra.eaten = nil
+
+            local my_pos = nil
+            for i = 1, #G.jokers.cards do
+                if G.jokers.cards[i] == self then my_pos = i; break end
+            end
+            if my_pos and G.jokers.cards[my_pos+1] and not self.getting_sliced and not G.jokers.cards[my_pos+1].ability.eternal and not G.jokers.cards[my_pos+1].getting_sliced and G.GAME.food_jokers_list[G.jokers.cards[my_pos+1].ability.name] then 
+                local sliced_card = G.jokers.cards[my_pos+1]
+                sliced_card.getting_sliced = true
+                G.GAME.joker_buffer = G.GAME.joker_buffer - 1
+                G.E_MANAGER:add_event(Event({func = function()
+                    G.GAME.joker_buffer = 0
+                    self:juice_up(0.8, 0.8)
+                    if sliced_card.ability.name == "Ice Cream" then
+                        self.ability.extra.val = sliced_card.ability.extra.chips * 2
+                        self.ability.extra.eaten = "chips"
+                    elseif sliced_card.ability.name == "Popcorn" then
+                        self.ability.extra.val = sliced_card.ability.mult * 2
+                        self.ability.extra.eaten = "mult"
+                    elseif sliced_card.ability.name == "Gros Michel" then
+                        self.ability.extra.val = sliced_card.ability.extra.mult * 2
+                        self.ability.extra.eaten = "mult"
+                        G.GAME.pool_flags.gros_michel_extinct = true
+                    elseif sliced_card.ability.name == "Turtle Bean" then
+                        self.ability.extra.val = sliced_card.ability.extra.h_size * 2
+                        self.ability.extra.eaten = "h_size"
+                        G.hand:change_size(self.ability.extra.val)
+                    elseif sliced_card.ability.name == "Seltzer" then
+                        self.ability.extra.val = 2
+                        self.ability.extra.eaten = "repetitions"
+                    elseif sliced_card.ability.name == "Ramen" then
+                        self.ability.extra.val = sliced_card.ability.x_mult * 2
+                        self.ability.extra.eaten = "x_mult"
+                    elseif sliced_card.ability.name == "Cavendish" then
+                        self.ability.extra.val = sliced_card.ability.extra.Xmult * 2
+                        self.ability.extra.eaten = "x_mult"
+                    elseif sliced_card.ability.name == "Caviar" then
+                        self.ability.extra.val = sliced_card.ability.extra.dollars * 2
+                        self.ability.extra.eaten = "play_dollars"
+                    elseif sliced_card.ability.name == "Two-Bite Brownie" then
+                        self.ability.extra.val = sliced_card.ability.extra.retriggers * 2
+                        self.ability.extra.eaten = "2_retrigger"
+                    end
+                    sliced_card:start_dissolve({HEX("57ecab")}, nil, 1.6)
+                    G.GAME.foods_eaten = G.GAME.foods_eaten + 1
+                    play_sound('slice1', 0.96+math.random()*0.08)
+                return true end }))
+                card_eval_status_text(self, 'extra', nil, nil, nil, {message = localize('k_consumed')})
+            end
+        end
+        if self.ability.name == "Edition Eater" and not (context.blueprint_card or self).getting_sliced and not context.blueprint then
+            local target_joker = nil
+            for i=1,#G.jokers.cards do
+                if G.jokers.cards[i] == self and i < #G.jokers.cards then
+                    target_joker = G.jokers.cards[i+1]
+                    break
+                end
+            end
+            if target_joker and target_joker.edition then
+                local target_edition = target_joker.edition
+                sendDebugMessage(target_edition.type)
+                sendDebugMessage(self.ability.extra[target_edition.type])
+                self.ability.extra.Xmult = self.ability.extra.Xmult + self.ability.extra[target_edition.type]
+                target_joker:set_edition(nil, true, nil)
+                if target_edition.type == "negative" and #G.jokers.cards > G.jokers.config.card_limit then
+                    card_eval_status_text(self, 'extra', nil, nil, nil, {message = localize('k_no_room_ex')})
+                    target_joker:start_dissolve()
+                end
+                card_eval_status_text(self, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_xmult',vars={self.ability.extra.Xmult}}})
+            end
         end
       elseif context.destroying_card then
       elseif context.cards_destroyed then
@@ -391,6 +753,68 @@ function Card.calculate_joker(self, context)
           if self.ability.name == 'Scouter Joker' then self.ability.extra = 0 end
         elseif context.repetition then
         elseif not context.blueprint then
+            if self.ability.name == 'Two-Bite Brownie' and not context.blueprint then
+                if self.ability.extra.retriggers - self.ability.extra.retrigger_mod <= 0 then 
+                    G.GAME.foods_eaten = G.GAME.foods_eaten + 1
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            play_sound('tarot1')
+                            self.T.r = -0.2
+                            self:juice_up(0.3, 0.4)
+                            self.states.drag.is = true
+                            self.children.center.pinch.x = true
+                            G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.3, blockable = false,
+                                func = function()
+                                        G.jokers:remove_card(self)
+                                        self:remove()
+                                        self = nil
+                                    return true; end})) 
+                            return true
+                        end
+                    })) 
+                    return {
+                        message = localize('k_eaten_ex'),
+                        colour = G.C.RED
+                    }
+                else
+                    self.ability.extra.retriggers = self.ability.extra.retriggers - self.ability.extra.retrigger_mod
+                    return {
+                        message = localize{type='variable',key='a_chips_minus',vars={self.ability.extra.retrigger_mod}},
+                        colour = G.C.FILTER
+                    }
+                end
+            end
+            if self.ability.name == 'Caviar' and not context.blueprint then
+                if self.ability.extra.dollars - self.ability.extra.dollar_mod <= 0 then 
+                    G.GAME.foods_eaten = G.GAME.foods_eaten + 1
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            play_sound('tarot1')
+                            self.T.r = -0.2
+                            self:juice_up(0.3, 0.4)
+                            self.states.drag.is = true
+                            self.children.center.pinch.x = true
+                            G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.3, blockable = false,
+                                func = function()
+                                        G.jokers:remove_card(self)
+                                        self:remove()
+                                        self = nil
+                                    return true; end})) 
+                            return true
+                        end
+                    })) 
+                    return {
+                        message = localize('k_eaten_ex'),
+                        colour = G.C.RED
+                    }
+                else
+                    self.ability.extra.dollars = self.ability.extra.dollars - self.ability.extra.dollar_mod
+                    return {
+                        message = '-' .. localize('$') .. self.ability.extra.dollar_mod,
+                        colour = G.C.MONEY
+                    }
+                end
+            end
             if self.ability.name == "Zeno's Joker" and #G.playing_cards > 0 and #G.deck.cards / #G.playing_cards <= 0.5 and #G.deck.cards > 0 then
                 local card = pseudorandom_element(G.deck.cards, pseudoseed("Zeno's Joker"))
                 card.destroyed = true
@@ -418,6 +842,27 @@ function Card.calculate_joker(self, context)
             end
         end
       elseif context.repetition then
+        if self.ability.name == 'Mineral Deposit' and context.cardarea == G.play and context.other_card:get_id() < -10 then
+                    return {
+                        message = localize('k_again_ex'),
+                        repetitions = self.ability.extra,
+                        card = self
+                    }
+        end
+        if self.ability.name == "Two-Bite Brownie" and context.cardarea == G.play and context.other_card:get_id() == 2 then
+            return {
+                message = localize('k_again_ex'),
+                repetitions = self.ability.extra.retriggers,
+                card = self
+            }
+        end
+        if self.ability.name == "The Pink Menace" and context.cardarea == G.play and (self.ability.extra.eaten == "repetitions" or (self.ability.extra.eaten == "2_retrigger" and context.other_card:get_id() == 2)) then
+            return {
+                message = localize('k_again_ex'),
+                repetitions = self.ability.extra.val,
+                card = self
+            }
+        end
       elseif context.other_joker then
       elseif context.adding_to_deck then
       elseif context.individual then
@@ -451,6 +896,18 @@ function Card.calculate_joker(self, context)
               mult = math.max(0, curr_mult),
               card = self
           }
+        end
+        if self.ability.name == 'Furnace' and context.cardarea == G.play and context.other_card.config.center == G.P_CENTERS.m_coal and not context.blueprint then
+            local changed_val = false
+            for k, v in ipairs(G.playing_cards) do
+                if v ~= context.other_card and v.config.center == G.P_CENTERS.m_coal then
+                    changed_val = true
+                    v.ability.extra.current = v.ability.extra.current + 1
+                end
+            end
+            if changed_val then
+                card_eval_status_text(context.blueprint_card or self, 'extra', nil, nil, nil, {message = localize('k_furnace_heat'), colour = G.C.DARK_EDITION})
+            end
         end
       else
           if context.cardarea == G.jokers then
@@ -488,7 +945,7 @@ function Card.calculate_joker(self, context)
                         local enhancement = enhanced[i]
                         local card = pseudorandom_element(viable_cards, pseudoseed('Mad Hatter'))
                         while (enhancement.enhancement and card.config.center ~= G.P_CENTERS.c_base) or (enhancement.edition and card.edition) or (enhancement.seal and card.seal) do
-                            card = pseudorandom_element(viable_cards, pseudoseed('Mad Hatter'))
+                            card = pseudorandom_element(viable_cards, seudoseed('Mad Hatter'))
                         end
                         if enhancement.enhancement then
                             card:set_ability(enhancement.enhancement, nil, true)
@@ -521,12 +978,65 @@ function Card.calculate_joker(self, context)
                     colour = G.C.MULT
                 }
               end
+              if self.ability.name == 'Glutton Joker' and G.GAME.foods_eaten > 0 then
+                return {
+                    message = localize{type='variable',key='a_xmult',vars={1 + self.ability.extra*G.GAME.foods_eaten}},
+                    Xmult_mod = 1 + self.ability.extra*G.GAME.foods_eaten, 
+                    colour = G.C.MULT
+                }
+              end
+              if self.ability.name == 'Edition Eater' and self.ability.extra.Xmult > 1 then
+                return {
+                    message = localize{type='variable',key='a_xmult',vars={self.ability.extra.Xmult}},
+                    Xmult_mod = self.ability.extra.Xmult, 
+                    colour = G.C.MULT
+                }
+              end
               if self.ability.name == 'The Collector' and self.ability.edition_tally > 0 then
                   return {
                       message = localize{type='variable',key='a_xmult',vars={1 + self.ability.extra*self.ability.edition_tally}},
                       Xmult_mod = 1 + self.ability.extra*self.ability.edition_tally, 
                       colour = G.C.MULT
                   }
+              end
+              if self.ability.name == 'Caviar' then
+                    ease_dollars(self.ability.extra.dollars)
+                    G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + self.ability.extra.dollars
+                    G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
+                    return {
+                        message = localize('$')..self.ability.extra.dollars,
+                        dollars = self.ability.extra.dollars,
+                        colour = G.C.MONEY
+                    }
+              end
+              if self.ability.name == "The Pink Menace" then
+                    if self.ability.extra.eaten == "play_dollars" then
+                        ease_dollars(self.ability.extra.val)
+                        G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + self.ability.extra.val
+                        G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
+                        return {
+                            message = localize('$')..self.ability.extra.val,
+                            dollars = self.ability.extra.val,
+                            colour = G.C.MONEY
+                        }
+                    elseif self.ability.extra.eaten == "mult" then
+                        return {
+                            message = localize{type='variable',key='a_mult',vars={self.ability.extra.val}},
+                            mult_mod = self.ability.extra.val
+                        }
+                    elseif self.ability.extra.eaten == "chips" then
+                        return {
+                            message = localize{type='variable',key='a_chips',vars={self.ability.extra.val}},
+                            chip_mod = self.ability.extra.val, 
+                            colour = G.C.CHIPS
+                        }
+                    elseif self.ability.extra.eaten == "x_mult" then
+                        return {
+                            message = localize{type='variable',key='a_xmult',vars={self.ability.extra.val}},
+                            Xmult_mod = self.ability.extra.val, 
+                            colour = G.C.MULT
+                        }
+                    end
               end
               if self.ability.name == 'Buckleswasher' and self.ability.mult > 0 then
                 return {
@@ -567,8 +1077,18 @@ function Card.generate_UIBox_ability_table(self)
   elseif self.ability.set == 'Joker' then
       local customJoker = false
 
-      if self.ability.name == 'Polydactyly' then
+      if self.ability.name == 'Glutton Joker' then
         customJoker = true
+        loc_vars = {self.ability.extra, 1 + G.GAME.foods_eaten * self.ability.extra}
+      elseif self.ability.name == 'Edition Eater' then
+        customJoker = true
+        loc_vars = {self.ability.extra.foil, self.ability.extra.holo, self.ability.extra.polychrome, self.ability.extra.negative, self.ability.extra.Xmult}
+      elseif self.ability.name == 'Two-Bite Brownie' then
+        customJoker = true 
+        loc_vars = {self.ability.extra.retriggers, self.ability.extra.retrigger_mod}
+      elseif self.ability.name == 'Caviar' then
+        customJoker = true 
+        loc_vars = {self.ability.extra.dollars, self.ability.extra.dollar_mod}
       elseif self.ability.name == 'Special Snowflake' then
         customJoker = true 
         loc_vars = {self.ability.extra, 1 + self.ability.extra*(self.ability.unique_tally or 0)}
@@ -637,18 +1157,34 @@ G.FUNCS.get_poker_hand_info = function(_cards)
     local poker_hands = evaluate_poker_hand(_cards)
     local scoring_hand = {}
     local text,disp_text,loc_disp_text = 'NULL','NULL', 'NULL'
-    if next(poker_hands["Flush Five"]) then text = "Flush Five"; scoring_hand = poker_hands["Flush Five"][1]
-    elseif next(poker_hands["Flush House"]) then text = "Flush House"; scoring_hand = poker_hands["Flush House"][1]
-    elseif next(poker_hands["Five of a Kind"]) then text = "Five of a Kind"; scoring_hand = poker_hands["Five of a Kind"][1]
-    elseif next(poker_hands["Straight Flush"]) then text = "Straight Flush"; scoring_hand = poker_hands["Straight Flush"][1]
-    elseif next(poker_hands["Four of a Kind"]) then text = "Four of a Kind"; scoring_hand = poker_hands["Four of a Kind"][1]
-    elseif next(poker_hands["Full House"]) then text = "Full House"; scoring_hand = poker_hands["Full House"][1]
-    elseif next(poker_hands["Flush"]) then text = "Flush"; scoring_hand = poker_hands["Flush"][1]
-    elseif next(poker_hands["Straight"]) then text = "Straight"; scoring_hand = poker_hands["Straight"][1]
-    elseif next(poker_hands["Three of a Kind"]) then text = "Three of a Kind"; scoring_hand = poker_hands["Three of a Kind"][1]
-    elseif next(poker_hands["Two Pair"]) then text = "Two Pair"; scoring_hand = poker_hands["Two Pair"][1]
-    elseif next(poker_hands["Pair"]) then text = "Pair"; scoring_hand = poker_hands["Pair"][1]
-    elseif next(poker_hands["High Card"]) then text = "High Card"; scoring_hand = poker_hands["High Card"][1] end
+    if next(find_joker("Pierrot")) then
+        for i=5 + #find_joker('Pierrot'),6,-1 do
+            if next(poker_hands["Flush Five"]) and #poker_hands["Flush Five"][1] == i then text = "Flush Five"; scoring_hand = poker_hands["Flush Five"][1]
+            elseif next(poker_hands["Flush House"]) and #poker_hands["Flush House"][1] == i then text = "Flush House"; scoring_hand = poker_hands["Flush House"][1]
+            elseif next(poker_hands["Five of a Kind"]) and #poker_hands["Five of a Kind"][1] == i then text = "Five of a Kind"; scoring_hand = poker_hands["Five of a Kind"][1]
+            elseif next(poker_hands["Straight Flush"]) and #poker_hands["Straight Flush"][1] == i then text = "Straight Flush"; scoring_hand = poker_hands["Straight Flush"][1]
+            elseif next(poker_hands["Full House"]) and #poker_hands["Full House"][1] == i then text = "Full House"; scoring_hand = poker_hands["Full House"][1]
+            elseif next(poker_hands["Flush"]) and #poker_hands["Flush"][1] == i then text = "Flush"; scoring_hand = poker_hands["Flush"][1]
+            elseif next(poker_hands["Straight"]) and #poker_hands["Straight"][1] == i then text = "Straight"; scoring_hand = poker_hands["Straight"][1]
+            elseif next(poker_hands["Two Pair"]) and #poker_hands["Two Pair"][1] == i then text = "Two Pair"; scoring_hand = poker_hands["Two Pair"][1]
+            end
+            if #scoring_hand > 0 then break end
+        end
+    end
+    if #scoring_hand == 0 then
+        if next(poker_hands["Flush Five"]) then text = "Flush Five"; scoring_hand = poker_hands["Flush Five"][1]
+        elseif next(poker_hands["Flush House"]) then text = "Flush House"; scoring_hand = poker_hands["Flush House"][1]
+        elseif next(poker_hands["Five of a Kind"]) then text = "Five of a Kind"; scoring_hand = poker_hands["Five of a Kind"][1]
+        elseif next(poker_hands["Straight Flush"]) then text = "Straight Flush"; scoring_hand = poker_hands["Straight Flush"][1]
+        elseif next(poker_hands["Four of a Kind"]) then text = "Four of a Kind"; scoring_hand = poker_hands["Four of a Kind"][1]
+        elseif next(poker_hands["Full House"]) then text = "Full House"; scoring_hand = poker_hands["Full House"][1]
+        elseif next(poker_hands["Flush"]) then text = "Flush"; scoring_hand = poker_hands["Flush"][1]
+        elseif next(poker_hands["Straight"]) then text = "Straight"; scoring_hand = poker_hands["Straight"][1]
+        elseif next(poker_hands["Three of a Kind"]) then text = "Three of a Kind"; scoring_hand = poker_hands["Three of a Kind"][1]
+        elseif next(poker_hands["Two Pair"]) then text = "Two Pair"; scoring_hand = poker_hands["Two Pair"][1]
+        elseif next(poker_hands["Pair"]) then text = "Pair"; scoring_hand = poker_hands["Pair"][1]
+        elseif next(poker_hands["High Card"]) then text = "High Card"; scoring_hand = poker_hands["High Card"][1] end
+    end
 
     disp_text = text
     if text =='Straight Flush' then
@@ -661,19 +1197,19 @@ G.FUNCS.get_poker_hand_info = function(_cards)
         end
     end
     if(#scoring_hand > 5) then
-        if text == 'Flush Five' then disp_text = 'Flush Six'
-        elseif text == 'Flush House' then disp_text = 'Flusher House'
-        elseif text == 'Five of a Kind' then disp_text = 'Six of a Kind'
-        elseif text == 'Full House' then disp_text = 'Fuller House'
-        elseif text == 'Two Pair' then disp_text = 'Three Pair'
+        local est_scoring = 'er'
+        if #scoring_hand > 7 then est_scoring = string.rep("est", math.floor((#scoring_hand-6)/2)) end
+        if text == 'Flush Five' then disp_text = 'Flush ' .. digits[#scoring_hand]
+        elseif text == 'Flush House' then disp_text = 'Flush' .. est_scoring .. ' House'
+        elseif text == 'Five of a Kind' then disp_text = digits[#scoring_hand] .. ' of a Kind'
+        elseif text == 'Full House' then disp_text = 'Full' .. est_scoring .. ' House'
+        elseif text == 'Two Pair' then disp_text = digits[math.floor(#scoring_hand/2)] .. ' Pair'
         end
         loc_disp_text = localize(disp_text, 'poker_hands')
         return text, loc_disp_text, poker_hands, scoring_hand, disp_text
     end
     return poker_hands_info_ref(_cards)
 end
-
-
 
 -- Card updates
 local card_updateref = Card.update
@@ -721,7 +1257,6 @@ function Card.update(self, dt)
   card_updateref(self, dt)
 end
 
--- Polydactyly
 local add_to_deckref = Card.add_to_deck
 function Card.add_to_deck(self, from_debuff)
   if not self.added_to_deck then
@@ -741,6 +1276,9 @@ function Card.remove_from_deck(self, from_debuff)
         for k, v in pairs(G.GAME.probabilities) do 
             G.GAME.probabilities[k] = v*2
         end
+      end
+      if self.ability.name == 'The Pink Menace' and self.ability.extra.eaten == 'h_size' then
+        G.hand:change_size(-self.ability.extra.val)
       end
   end
   remove_from_deckref(self, from_debuff)
@@ -999,7 +1537,7 @@ local add_to_highlighted_ref = CardArea.add_to_highlighted
 function CardArea.add_to_highlighted(self, card, silent)
     --if self.config.highlighted_limit <= #self.highlighted then return end
     if next(find_joker('Pierrot')) and self.config.type ~= 'shop' and self.config.type ~= 'joker' and self.config.type ~= 'consumeable' then
-        if #self.highlighted >= 6 then
+        if #self.highlighted >= 5 + #find_joker('Pierrot') then
             card:highlight(false)
         else
             self.highlighted[#self.highlighted+1] = card
@@ -1020,95 +1558,92 @@ function evaluate_poker_hand(hand)
     local results = evaluate_poker_hand_ref(hand)
     local old_top = results.top
     results.top = nil
-    if next(get_X_same(6,hand)) and next(get_flush(hand)) then
-      results["Flush Five"] = get_X_same(6,hand)
-      if not results.top then results.top = results["Flush Five"] end
-    end
-
-    if next(get_X_same(6,hand)) then
-      results["Five of a Kind"] = get_X_same(6,hand)
-      if not results.top then results.top = results["Five of a Kind"] end
-    end
-  
-    if next(get_flush(hand)) and next(get_straight(hand)) then
-      local _s, _f, ret = get_straight(hand), get_flush(hand), {}
-      for _, v in ipairs(_f[1]) do
-        ret[#ret+1] = v
-      end
-      for _, v in ipairs(_s[1]) do
-        local in_straight = nil
-        for _, vv in ipairs(_f[1]) do
-          if vv == v then in_straight = true end
+    for i=5 + #find_joker('Pierrot'),6,-1 do
+        sendDebugMessage("i = " .. i)
+        if next(get_X_same(i,hand)) and next(get_flush(hand)) then
+        results["Flush Five"] = get_X_same(i,hand)
+        if not results.top then results.top = results["Flush Five"] end
+        sendDebugMessage("Flush Five")
         end
-        if not in_straight then ret[#ret+1] = v end
-      end
-  
-      results["Straight Flush"] = {ret}
-      if not results.top then results.top = results["Straight Flush"] end
-    end
-    if #get_X_same(3,hand) == 2 and next(get_flush(hand)) then
+        if next(get_X_same(i,hand)) then
+        results["Five of a Kind"] = get_X_same(i,hand)
+        if not results.top then results.top = results["Five of a Kind"] end
+        sendDebugMessage("Five oak")
+        end
+        if next(get_flush(hand)) and next(get_straight(hand)) then
+        local _s, _f, ret = get_straight(hand), get_flush(hand), {}
+        for _, v in ipairs(_f[1]) do
+            ret[#ret+1] = v
+        end
+        for _, v in ipairs(_s[1]) do
+            local in_straight = nil
+            for _, vv in ipairs(_f[1]) do
+            if vv == v then in_straight = true end
+            end
+            if not in_straight then ret[#ret+1] = v end
+        end
+    
+        results["Straight Flush"] = {ret}
+        if not results.top then results.top = results["Straight Flush"] end
+        sendDebugMessage("Straight Flush")
+        end
+        if #get_X_same(math.floor(i/2),hand) == 2 and next(get_flush(hand)) then
+            local fh_hand = {}
+            local fh = get_X_same(math.floor(i/2),hand)
+            local fh_3 = fh[1]
+            local fh_2 = fh[1]
+            for i=1, #fh_3 do
+            fh_hand[#fh_hand+1] = fh_3[i]
+            end
+            for i=1, #fh_2 do
+            fh_hand[#fh_hand+1] = fh_2[i]
+            end
+            table.insert(results["Flush House"], fh_hand)
+            if not results.top then results.top = results["Flush House"] end
+            sendDebugMessage("Flush House")
+        end
+        if #get_X_same(math.floor(i/2),hand) == 2 then
+            local fh_hand = {}
+            local r = get_X_same(math.floor(i/2),hand)
+            local fh_2a = r[1]
+            local fh_2b = r[2]
+            for i=1, #fh_2a do
+            fh_hand[#fh_hand+1] = fh_2a[i]
+            end
+            for i=1, #fh_2b do
+            fh_hand[#fh_hand+1] = fh_2b[i]
+            end
+            table.insert(results["Full House"], fh_hand)
+            if not results.top then results.top = results["Full House"] end
+            sendDebugMessage("Full House")
+        end
+        if next(get_flush(hand)) then
+            results["Flush"] = get_flush(hand)
+            if not results.top and #results["Four of a Kind"] == 0 then results.top = results["Flush"] end
+            sendDebugMessage("Flush")
+        end
+        if next(get_straight(hand)) then
+            results["Straight"] = get_straight(hand)
+            if not results.top then results.top = results["Straight"] end
+            sendDebugMessage("Straight")
+        end
+        if #get_X_same(2,hand) == math.floor(i/2) then
         local fh_hand = {}
-        local fh = get_X_same(3,hand)
-        local fh_3 = fh[1]
-        local fh_2 = fh[1]
-        for i=1, #fh_3 do
-          fh_hand[#fh_hand+1] = fh_3[i]
+        local r = get_X_same(2,hand)
+        for j=1,#math.floor(i/2) do
+            for i=1, #r[j] do
+                fh_hand[#fh_hand+1] = r[j][i]
+            end
         end
-        for i=1, #fh_2 do
-          fh_hand[#fh_hand+1] = fh_2[i]
+        table.insert(results["Two Pair"], fh_hand)
+        if not results.top then results.top = results["Two Pair"] end
+        sendDebugMessage("Two Pair")
         end
-        table.insert(results["Flush House"], fh_hand)
-        if not results.top then results.top = results["Flush House"] end
-    end
-
-    if #get_X_same(3,hand) == 2 then
-        local fh_hand = {}
-        local r = get_X_same(3,hand)
-        local fh_2a = r[1]
-        local fh_2b = r[2]
-        for i=1, #fh_2a do
-          fh_hand[#fh_hand+1] = fh_2a[i]
+        if results["Five of a Kind"][1] and #results["Five of a Kind"] >= 6 then
+        results["Four of a Kind"] = {results["Five of a Kind"][1], results["Five of a Kind"][2], results["Five of a Kind"][3], results["Five of a Kind"][4], results["Five of a Kind"][5]}
         end
-        for i=1, #fh_2b do
-          fh_hand[#fh_hand+1] = fh_2b[i]
-        end
-        table.insert(results["Full House"], fh_hand)
-        if not results.top then results.top = results["Full House"] end
+        if results.top then break end
     end
-
-    if next(get_flush(hand)) then
-        results["Flush"] = get_flush(hand)
-        if not results.top and #results["Four of a Kind"] == 0 then results.top = results["Flush"] end
-    end
-
-    if next(get_straight(hand)) then
-        results["Straight"] = get_straight(hand)
-        if not results.top then results.top = results["Straight"] end
-    end
-
-    if #get_X_same(2,hand) == 3 then
-      local fh_hand = {}
-      local r = get_X_same(2,hand)
-      local fh_2a = r[1]
-      local fh_2b = r[2]
-      local fh_2c = r[3]
-      for i=1, #fh_2a do
-        fh_hand[#fh_hand+1] = fh_2a[i]
-      end
-      for i=1, #fh_2b do
-        fh_hand[#fh_hand+1] = fh_2b[i]
-      end
-      for i=1, #fh_2c do
-        fh_hand[#fh_hand+1] = fh_2c[i]
-      end
-      table.insert(results["Two Pair"], fh_hand)
-      if not results.top then results.top = results["Two Pair"] end
-    end
-  
-    if results["Five of a Kind"][1] and #results["Five of a Kind"] == 6 then
-      results["Four of a Kind"] = {results["Five of a Kind"][1], results["Five of a Kind"][2], results["Five of a Kind"][3], results["Five of a Kind"][4], results["Five of a Kind"][5]}
-    end
-
     if not results.top then results.top = old_top end
     return results
 end
@@ -1192,6 +1727,248 @@ function get_straight(hand)
 end
 
 
+local draw_from_deck_to_hand_ref = G.FUNCS.draw_from_deck_to_hand
+G.FUNCS.draw_from_deck_to_hand = function(e)
+    if not (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK) and
+        G.hand.config.card_limit <= 0 and #G.hand.cards == 0 then 
+        G.STATE = G.STATES.GAME_OVER; G.STATE_COMPLETE = false 
+        return true
+    end
+    draw_from_deck_to_hand_ref()
+    if next(find_joker("Greedy Pot")) and (G.GAME.current_round.hands_played > 0 or G.GAME.current_round.discards_used > 0) then
+        for i = 1, #find_joker("Greedy Pot") * 2 do
+            draw_card(G.deck,G.hand, i*100/(#find_joker("Greedy Pot") * 2),'up', true)
+        end
+    end
+end
+
+
+local card_open_ref = Card.open
+function Card:open()
+   if self.ability.set == "Booster" then
+        if next(find_joker("Magnate")) and self.ability.name:find("Standard") then
+            stop_use()
+            G.STATE_COMPLETE = false 
+            self.opening = true
+            if not self.config.center.discovered then
+                discover_card(self.config.center)
+            end
+            self.states.hover.can = false
+            G.STATE = G.STATES.STANDARD_PACK
+            G.GAME.pack_size = self.ability.extra
+            G.GAME.pack_choices = self.config.center.config.choose or 1
+            if self.cost > 0 then 
+                G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2, func = function()
+                    inc_career_stat('c_shop_dollars_spent', self.cost)
+                    self:juice_up()
+                return true end }))
+                ease_dollars(-self.cost) 
+            else
+               delay(0.2)
+            end
+            G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+                self:explode()
+                local pack_cards = {}
+    
+                G.E_MANAGER:add_event(Event({trigger = 'after', delay = 1.3*math.sqrt(G.SETTINGS.GAMESPEED), blockable = false, blocking = false, func = function()
+                    local _size = self.ability.extra
+                    
+                    for i = 1, _size do
+                        local card = create_card((pseudorandom(pseudoseed('stdset')) > 0.6) and "Enhanced" or "Base", G.pack_cards, nil, nil, nil, true, nil, 'sta')
+                        local edition_rate = 2
+                        local edition = poll_edition('standard_edition'..G.GAME.round_resets.ante, edition_rate, true)
+                        card:set_edition(edition)
+                        local chosen_card = pseudorandom_element(G.deck.cards, pseudoseed('magnate_m'))
+                        local suit_prefix = string.sub(chosen_card.base.suit, 1, 1)..'_'
+                        local rank_suffix = chosen_card.base.id
+                        if rank_suffix < 10 then rank_suffix = tostring(rank_suffix)
+                        elseif rank_suffix == 10 then rank_suffix = 'T'
+                        elseif rank_suffix == 11 then rank_suffix = 'J'
+                        elseif rank_suffix == 12 then rank_suffix = 'Q'
+                        elseif rank_suffix == 13 then rank_suffix = 'K'
+                        elseif rank_suffix == 14 then rank_suffix = 'A'
+                        end
+                        sendDebugMessage(suit_prefix .. rank_suffix)
+                        card:set_base(G.P_CARDS[suit_prefix..rank_suffix])
+                        local seal_rate = 10
+                        local seal_poll = pseudorandom(pseudoseed('stdseal'))
+                        if seal_poll > 1 - 0.02*seal_rate then
+                            local seal_type = pseudorandom(pseudoseed('stdsealtype'))
+                            if seal_type > 0.75 then card:set_seal('Red')
+                            elseif seal_type > 0.5 then card:set_seal('Blue')
+                            elseif seal_type > 0.25 then card:set_seal('Gold')
+                            else card:set_seal('Purple')
+                            end
+                        end
+                        card.T.x = self.T.x
+                        card.T.y = self.T.y
+                        card:start_materialize({G.C.WHITE, G.C.WHITE}, nil, 1.5*G.SETTINGS.GAMESPEED)
+                        pack_cards[i] = card
+                    end
+                    return true
+                end}))
+    
+                G.E_MANAGER:add_event(Event({trigger = 'after', delay = 1.3*math.sqrt(G.SETTINGS.GAMESPEED), blockable = false, blocking = false, func = function()
+                    if G.pack_cards then 
+                        if G.pack_cards and G.pack_cards.VT.y < G.ROOM.T.h then 
+                        for k, v in ipairs(pack_cards) do
+                            G.pack_cards:emplace(v)
+                        end
+                        return true
+                        end
+                    end
+                end}))
+    
+                for i = 1, #G.jokers.cards do
+                    G.jokers.cards[i]:calculate_joker({open_booster = true, card = self})
+                end
+    
+                if G.GAME.modifiers.inflation then 
+                    G.GAME.inflation = G.GAME.inflation + 1
+                    G.E_MANAGER:add_event(Event({func = function()
+                      for k, v in pairs(G.I.CARD) do
+                          if v.set_cost then v:set_cost() end
+                      end
+                      return true end }))
+                end
+    
+            return true end }))
+        else
+            card_open_ref(self)
+        end
+    end
+end
+
+local generate_card_ui_ref = generate_card_ui
+function generate_card_ui(_c, full_UI_table, specific_vars, card_type, badges, hide_desc, main_start, main_end)
+    local customCard = false
+    if _c.name == 'Furnace' or _c.name == 'Krampus' or _c.name == "The Pink Menace" or _c.name == "Chef Joker" or _c.name == "Glutton Joker" or _c.name == "Fridge" or _c.name == "Wise Penny" then
+        customCard = true
+    end
+    if not customCard then return generate_card_ui_ref(_c, full_UI_table, specific_vars, card_type, badges, hide_desc, main_start, main_end) end
+    local first_pass = nil
+    if not full_UI_table then 
+        first_pass = true
+        full_UI_table = {
+            main = {},
+            info = {},
+            type = {},
+            name = nil,
+            badges = badges or {}
+        }
+    end
+
+    local desc_nodes = (not full_UI_table.name and full_UI_table.main) or full_UI_table.info
+    local name_override = nil
+    local info_queue = {}
+
+    if full_UI_table.name then
+        full_UI_table.info[#full_UI_table.info+1] = {}
+        desc_nodes = full_UI_table.info[#full_UI_table.info]
+    end
+
+    if not full_UI_table.name then
+        if specific_vars and specific_vars.no_name then
+            full_UI_table.name = true
+        elseif card_type == 'Locked' then
+            full_UI_table.name = localize{type = 'name', set = 'Other', key = 'locked', nodes = {}}
+        elseif card_type == 'Undiscovered' then 
+            full_UI_table.name = localize{type = 'name', set = 'Other', key = 'undiscovered_'..(string.lower(_c.set)), name_nodes = {}}
+        elseif specific_vars and (card_type == 'Default' or card_type == 'Enhanced') then
+            if (_c.name == 'Coal Card' or _c.name == 'Stone Card' or _c.name == 'Blank Card') then full_UI_table.name = true end
+            if (specific_vars.playing_card and (_c.name ~= 'Coal Card' and _c.name ~= 'Stone Card' and _c.name ~= 'Blank Card')) then
+                full_UI_table.name = {}
+                localize{type = 'other', key = 'playing_card', set = 'Other', nodes = full_UI_table.name, vars = {localize(specific_vars.value, 'ranks'), localize(specific_vars.suit, 'suits_plural'), colours = {specific_vars.colour}}}
+                full_UI_table.name = full_UI_table.name[1]
+            end
+        elseif card_type == 'Booster' then
+            
+        else
+            full_UI_table.name = localize{type = 'name', set = _c.set, key = _c.key, nodes = full_UI_table.name}
+        end
+        full_UI_table.card_type = card_type or _c.set
+    end 
+
+    local loc_vars = {}
+    if main_start then 
+        desc_nodes[#desc_nodes+1] = main_start 
+    end
+
+    if _c.set == 'Other' then
+        localize{type = 'other', key = _c.key, nodes = desc_nodes, vars = specific_vars}
+    elseif card_type == 'Locked' then
+    elseif hide_desc then
+        localize{type = 'other', key = 'undiscovered_'..(string.lower(_c.set)), set = _c.set, nodes = desc_nodes}
+    elseif specific_vars and specific_vars.debuffed then
+        localize{type = 'other', key = 'debuffed_'..(specific_vars.playing_card and 'playing_card' or 'default'), nodes = desc_nodes}
+    elseif _c.set == 'Joker' then
+        if _c.name == 'Furnace' then info_queue[#info_queue+1] = G.P_CENTERS.m_coal
+        elseif _c.name == 'Krampus' then info_queue[#info_queue+1] = G.P_CENTERS.m_coal
+        elseif _c.name == 'Fridge' then info_queue[#info_queue+1] = {key = 'food_jokers', set = 'Other'}
+        elseif _c.name == 'Chef Joker' then info_queue[#info_queue+1] = {key = 'food_jokers', set = 'Other'}
+        elseif _c.name == 'The Pink Menace' then info_queue[#info_queue+1] = {key = 'food_jokers', set = 'Other'}
+        elseif _c.name == 'Glutton Joker' then info_queue[#info_queue+1] = {key = 'food_jokers', set = 'Other'}
+        elseif _c.name == 'Wise Penny' then info_queue[#info_queue+1] = {key = 'gold_seal', set = 'Other'}
+        end
+        if specific_vars and specific_vars.pinned then info_queue[#info_queue+1] = {key = 'pinned_left', set = 'Other'} end
+        if specific_vars and specific_vars.sticker then info_queue[#info_queue+1] = {key = string.lower(specific_vars.sticker)..'_sticker', set = 'Other'} end
+        localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = specific_vars or {}}
+    elseif _c.set == 'Tag' then
+    elseif _c.set == 'Voucher' then
+    elseif _c.set == 'Edition' then
+        loc_vars = {_c.config.extra}
+        localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = loc_vars}
+    elseif _c.set == 'Default' and specific_vars then 
+        if specific_vars.nominal_chips then 
+            localize{type = 'other', key = 'card_chips', nodes = desc_nodes, vars = {specific_vars.nominal_chips}}
+        end
+        if specific_vars.bonus_chips then
+            localize{type = 'other', key = 'card_extra_chips', nodes = desc_nodes, vars = {specific_vars.bonus_chips}}
+        end
+    elseif _c.set == 'Enhanced' then 
+    elseif _c.set == 'Booster' then 
+    elseif _c.set == 'Spectral' then 
+    elseif _c.set == 'Planet' then
+    elseif _c.set == 'Tarot' then
+       
+   end
+
+    if main_end then 
+        desc_nodes[#desc_nodes+1] = main_end 
+    end
+
+   --Fill all remaining info if this is the main desc
+    if not ((specific_vars and not specific_vars.sticker) and (card_type == 'Default' or card_type == 'Enhanced')) then
+        if desc_nodes == full_UI_table.main and not full_UI_table.name then
+            localize{type = 'name', key = _c.key, set = _c.set, nodes = full_UI_table.name} 
+            if not full_UI_table.name then full_UI_table.name = {} end
+        elseif desc_nodes ~= full_UI_table.main then 
+            desc_nodes.name = localize{type = 'name_text', key = name_override or _c.key, set = name_override and 'Other' or _c.set} 
+        end
+    end
+
+    if first_pass and not (_c.set == 'Edition') and badges then
+        for k, v in ipairs(badges) do
+            if v == 'foil' then info_queue[#info_queue+1] = G.P_CENTERS['e_foil'] end
+            if v == 'holographic' then info_queue[#info_queue+1] = G.P_CENTERS['e_holo'] end
+            if v == 'polychrome' then info_queue[#info_queue+1] = G.P_CENTERS['e_polychrome'] end
+            if v == 'negative' then info_queue[#info_queue+1] = G.P_CENTERS['e_negative'] end
+            if v == 'negative_consumable' then info_queue[#info_queue+1] = {key = 'e_negative_consumable', set = 'Edition', config = {extra = 1}} end
+            if v == 'gold_seal' then info_queue[#info_queue+1] = {key = 'gold_seal', set = 'Other'} end
+            if v == 'blue_seal' then info_queue[#info_queue+1] = {key = 'blue_seal', set = 'Other'} end
+            if v == 'red_seal' then info_queue[#info_queue+1] = {key = 'red_seal', set = 'Other'} end
+            if v == 'purple_seal' then info_queue[#info_queue+1] = {key = 'purple_seal', set = 'Other'} end
+            if v == 'eternal' then info_queue[#info_queue+1] = {key = 'eternal', set = 'Other'} end
+            if v == 'pinned_left' then info_queue[#info_queue+1] = {key = 'pinned_left', set = 'Other'} end
+        end
+    end
+
+    for _, v in ipairs(info_queue) do
+        generate_card_ui(v, full_UI_table)
+    end
+
+    return full_UI_table
+end
 
 ----------------------------------------------
 ------------MOD CODE END----------------------

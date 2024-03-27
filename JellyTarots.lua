@@ -274,8 +274,8 @@ function SMODS.INIT.JellyTarots()
     updateLocalizationJelly(tarot_localization, "Tarot")
     updateLocalizationJelly(enhance_localization, "Enhanced")
     if supported_languages[G.SETTINGS.language] then
-        local tarot_localization = assert(loadstring(love.filesystem.read(SMODS.findModByID("JellyUtil").path .. '/localization/' ..G.SETTINGS.language..'/tarots.lua')))()
-        local enhance_localization = assert(loadstring(love.filesystem.read(SMODS.findModByID("JellyUtil").path .. '/localization/' ..G.SETTINGS.language..'/enhancements.lua')))()
+        local tarot_localization = assert(loadstring(love.filesystem.read(SMODS.findModByID("JellyTarots").path .. '/localization/' ..G.SETTINGS.language..'/tarots.lua')))()
+        local enhance_localization = assert(loadstring(love.filesystem.read(SMODS.findModByID("JellyTarots").path .. '/localization/' ..G.SETTINGS.language..'/enhancements.lua')))()
         updateLocalizationJelly(tarot_localization, "Tarot")
         updateLocalizationJelly(enhance_localization, "Enhanced")
     end
@@ -421,7 +421,7 @@ end
 local get_chip_bonus_ref = Card.get_chip_bonus
 function Card.get_chip_bonus(self)
     if self.ability.effect == 'Coal Card' and not self.debuff then
-        return self.ability.extra.sub_chips + self.ability.extra.add_chips * self.ability.extra.current
+        return self.ability.extra.sub_chips + self.ability.extra.add_chips * self.ability.extra.current + (self.ability.perma_bonus or 0)
     end
     if self.ability.effect == 'Blank Card' and not self.debuff then
         local target_card = self:get_blank_card_target()
@@ -597,6 +597,23 @@ function Card.use_consumeable(self, area, copier)
                 card:add_to_deck()
                 G.consumeables:emplace(card)
                 used_tarot:juice_up(0.3, 0.5)
+            else
+                G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+                    attention_text({
+                        text = localize('k_nope_ex'),
+                        scale = 1.3, 
+                        hold = 1.4,
+                        major = used_tarot,
+                        backdrop_colour = G.C.SECONDARY_SET.Tarot,
+                        align = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK) and 'tm' or 'cm',
+                        offset = {x = 0, y = (G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK) and -0.2 or 0},
+                        silent = true
+                        })
+                        G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.06*G.SETTINGS.GAMESPEED, blockable = false, blocking = false, func = function()
+                            play_sound('tarot2', 0.76, 0.4);return true end}))
+                        play_sound('tarot2', 1, 0.4)
+                        used_tarot:juice_up(0.3, 0.5)
+                return true end }))
             end
             return true end }))
         delay(0.6)
@@ -647,16 +664,25 @@ function Card.use_consumeable(self, area, copier)
         base_consumeable = false
         local deletable_jokers = {}
         for k, v in pairs(G.jokers.cards) do
-            if not v.ability.eternal then deletable_jokers[#deletable_jokers + 1] = v end
+            if not v.ability.eternal then 
+                local repetitions = math.max(1, (3 - v.config.center.rarity)*2)
+                for i = 1,repetitions do
+                    deletable_jokers[#deletable_jokers + 1] = v
+                end
+            end
         end
         local chosen_joker = pseudorandom_element(deletable_jokers, pseudoseed('judgement_rev_choice'))
         local rarity = chosen_joker.config.center.rarity
-        rarity = math.max(pseudorandom('rev_jud_rarity'), ((rarity == 3 and 0.99) or (rarity == 2 and 0.75) or 0.1))
-        if chosen_joker.config.center.rarity == 4 then rarity = nil end
+        local is_legendary = chosen_joker.config.center.rarity == 4
+        local rev_jud_rarity = pseudorandom('rev_jud_rarity')
+        if rarity == 3 and rev_jud_rarity >= 0.99 then is_legendary = true end
+        if rev_jud_rarity >= 0.66 and rarity < 3 then rarity = rarity + 1 end
+        rarity = (rarity == 3 and 0.99) or (rarity == 2 and 0.75) or 0.1
+        if is_legendary then rarity = nil end
         
         G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
             play_sound('timpani')
-            local card = create_card('Joker', G.jokers, chosen_joker.config.center.rarity == 4, rarity, nil, nil, nil, 'rev_jud')
+            local card = create_card('Joker', G.jokers, is_legendary, rarity, nil, nil, nil, 'rev_jud')
             sendDebugMessage(tostring(chosen_joker.edition))
             if chosen_joker.edition ~= nil then card:set_edition(chosen_joker.edition, true) end
             chosen_joker:start_dissolve()
@@ -1222,6 +1248,15 @@ function generate_card_ui(_c, full_UI_table, specific_vars, card_type, badges, h
     end
 
     return full_UI_table
+end
+
+local init_game_objectobjref = Game.init_game_object
+function Game.init_game_object(self)
+    local gameObj = init_game_objectobjref(self)
+
+    gameObj.foods_eaten = 0
+
+    return gameObj
 end
 
 

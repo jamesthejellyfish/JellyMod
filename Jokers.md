@@ -129,3 +129,104 @@ if you draw at least 50% of your deck
 during the round a random card
 in your deck will be destroyed
 and a Spectral card will be created
+
+
+
+## Wise Penny
+### Rarity: Uncommon
+if you don't spend money at a shop, a random
+nonsealed card gets a gold seal
+          
+          
+          
+          j_furnace = {
+## Furnace
+### Rarity: Rare
+all coal cards upgrade at the ",
+same time
+
+
+
+## Fridge
+### Rarity: Uncommon
+Food Jokers{} no longer
+decay or go extinct.
+
+
+
+## Krampus
+### Rarity: Uncommon
+Adds a Coal Card to your hand
+at the start of each blind.
+
+
+## Edition Eater
+### Rarity: Rare
+When blind is Selected,
+removes the edition of the joker to its right.
+Gains xN Mult per edition eaten.
+(N = Foil x0.5, Holographic x1,
+Negative x1.5, Polychrome x2)
+(Will Destroy the joker if it's negative and there's no room)
+
+
+
+## Magnate
+### Rarity: Uncommon
+standard packs will only contain
+cards that are the same rank and suit 
+as cards already in your deck.
+
+
+
+## Greedy Pot
+### Rarity: Rare
+After play or discard, always draw 
+2 more cards than you would otherwise.
+
+
+
+## The Pink Menace
+### Rarity: Uncommon
+When blind is selected,
+if the card to the right of this one is a food joker, 
+consume it, and for the next round, The
+Pink Menace provides twice the benefit
+that you would have received from the food joker.
+
+
+
+
+## Caviar
+### Rarity: Uncommon
+gives $5 per hand played.
+reduces by 1 each round,
+
+
+
+## Chef Joker
+### Rarity: Uncommon
+When blind is selected,
+create a random food joker 
+(Must have room.)
+
+
+
+## Two-Bite Brownie
+### Rarity: Common
+retriggers all twos 2 times
+reduces by 1 each round
+
+
+
+## Mineral Deposit
+### Rarity: Uncommon
+retriggers all cards that have
+no rank or suit
+
+
+
+## Glutton Joker
+### Rarity: Rare
+x1 Mult for every food joker that has been
+consumed this game

@@ -1,5 +1,5 @@
 # JellyMod
-A mod for balatro that adds 17 new jokers (including 2 new legendary cards!), reverse tarot cards, and some new challenges.
+A mod for balatro that adds 31 new jokers (including 2 new legendary cards!), reverse tarot cards, and some new challenges.
 
 Requires [Steammodded](https://github.com/Steamopollys/Steamodded)
 
@@ -14,7 +14,7 @@ Credit to [LushMod](https://github.com/lusciousdev/LushMod) for some of the code
 
 
 # Features:
-- 17 new jokers, including 2 new Legendaries!
+- 31 new jokers, including 2 new Legendaries!
 - For more info on the Jokers, click [Here](Jokers.md)
 ![Jokers](Screenshots/Jokers.png)
 ![Scouter Joker](Screenshots/Scouter.png)

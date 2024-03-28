@@ -22,7 +22,7 @@ Credit to [LushMod](https://github.com/lusciousdev/LushMod) for some of the code
 
 
 
-- 22 new "Reverse" Tarot cards, which do thematically similar things to their reight-side-up counterparts, but with a fun twist
+- 22 new "Reverse" Tarot cards, which do thematically similar things to their right-side-up counterparts, but with a fun twist
 - For more info on the Tarot Cards, click [Here](Tarots.md)
 ![Reverse Tarots](Screenshots/Tarots.png)
 ![new cards](Screenshots/Custom%20Cards.png)

@@ -7,15 +7,7 @@
 ----------------------------------------------
 ------------MOD CODE -------------------------
 
-local localization = {
-    bad_apple_joker = {
-        name = "Bad Apple Joker",
-        text = {
-            "You aren't quite sure what this",
-            "does. But it sure is intriguing to look at.",
-        }
-    },
-}
+
 
 --[[SMODS.Joker:new(
     name, slug,
@@ -24,25 +16,39 @@ local localization = {
     rarity, cost, unlocked, discovered, blueprint_compat, eternal_compat
 )
 ]]
-local jokers = {
-    bad_apple_joker = SMODS.Joker:new(
-        "Bad Apple Joker", "",
-        {},
-        {}, "",
-        3, 10, true, true, false, true
-    ),
-}
 
--- Blacklist individual Jokers here
-local jokerBlacklists = {
-    bad_apple_joker = false
-}
+
+
 
 function SMODS.INIT.BadApple()
-    sendDebugMessage("Loaded BadAppleJoker~")
-
+    local localization = {
+        bad_apple_joker = {
+            name = "Bad Apple Joker",
+            text = {
+                "You aren't quite sure what this",
+                "does. But it sure is intriguing to look at.",
+            }
+        },
+    }
+    
     -- Localization
     init_localization()
+
+    local jokers = {
+        bad_apple_joker = SMODS.Joker:new(
+            "Bad Apple Joker", "",
+            {},
+            {}, "",
+            3, 10, true, true, false, true
+        ),
+    }
+
+    -- Blacklist individual Jokers here
+    local jokerBlacklists = {
+        bad_apple_joker = false
+    }
+    
+    sendDebugMessage("Loaded BadAppleJoker~")
 
     -- Add Jokers to center
     for k, v in pairs(jokers) do
@@ -223,4 +229,3 @@ G.FUNCS.draw_from_deck_to_hand = function(e)
         end
     end
 end
-
